@@ -1,0 +1,23 @@
+<odoo>
+
+	<record id="booking_request_tree_view" model='ir.ui.view'>
+        <field name='name'>booking.request.tree.view</field>
+        <field name='model'>booking.request</field>
+        <field name='arch' type='xml'>
+           <tree editable='bottom'>
+	           	<field name="name"/>
+                <field name="active" invisible="1"/>
+           </tree>
+        </field>
+   	</record>
+   	
+	<record id="booking_request_action" model="ir.actions.act_window">
+        <field name="name">Booking requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">booking.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+	
+	<menuitem id="booking_request_menu" name="Booking requests" parent="menu_booking_resource_configuration" action="booking_request_action" sequence="5" />
+
+</odoo>

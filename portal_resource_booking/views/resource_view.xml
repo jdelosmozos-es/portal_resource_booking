@@ -1,0 +1,48 @@
+<odoo>
+
+	<record id="space_resource_tree_view" model='ir.ui.view'>
+        <field name='name'>space.resource.tree.view</field>
+        <field name='model'>calendar.event.location</field>
+        <field name="inherit_id" ref="calendar_resource_location_mac5.calendar_event_location_view_tree" />
+        <field name='arch' type='xml'>
+        	<xpath expr="//tree" position="replace">
+	           <tree>
+		           	<field name="sequence" widget="handle"/>
+		           	<field name="name"/>
+		           	<field name="capacity"/>
+	                <field name="active" invisible="1"/>
+	           </tree>
+            </xpath>
+        </field>
+   	</record>
+   	
+   	<record id="space_resource_form_view" model='ir.ui.view'>
+        <field name='name'>space.resource.form.view</field>
+        <field name='model'>calendar.event.location</field>
+        <field name='arch' type='xml'>
+            <form>
+            	<sheet>
+            		<h1>
+                        <field name="name" />
+                    </h1>
+                    <field name="image_1920" widget="image" class="oe_avatar"/> <!-- options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/> -->
+            		<group col="4">
+            			<field name="capacity"/>
+            		</group>
+            		<separator string="Description"/>
+                    <field name="note" nolabel="1" placeholder="Description of space..."/>
+            	</sheet>
+            </form>
+        </field>
+   	</record>
+
+	<record id="space_resource_action" model="ir.actions.act_window">
+        <field name="name">Spaces</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">calendar.event.location</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+	
+	<menuitem id="appoint_space_menu" name="Spaces" parent="menu_booking_resource_configuration" action="space_resource_action" sequence="1" />
+
+</odoo>

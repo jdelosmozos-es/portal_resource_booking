@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_booking_resource_agenda,access.booking.resource.agenda,model_booking_resource_agenda,,1,1,1,1
+access_booking_resource_agenda_slot,access.booking.resource.agenda.slot,model_booking_resource_agenda_slot,,1,1,1,1
+access_booking_holiday,access.booking.holiday,model_booking_holiday,base.group_user,1,1,1,1
+access_booking_weekoff,access.booking.weekoff,model_booking_weekoff,base.group_user,1,1,1,1
+access_resource_resource_manager,access.resource.resource.manager,resource.model_resource_resource,group_appointment_manager,1,1,1,1
+access_booking_close_service_wizard,access.booking.close.service.wizard,model_booking_close_service_wizard,base.group_user,1,1,1,1
+access_booking_wizard,access.booking.wizard,model_booking_wizard,base.group_user,1,1,1,1
+access_booking_additional_info,access.booking.additional.info,model_booking_additional_information,,1,1,1,1
+access_booking_request,access.booking.request,model_booking_request,,1,1,1,1
