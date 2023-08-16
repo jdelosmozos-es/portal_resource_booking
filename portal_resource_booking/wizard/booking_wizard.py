@@ -4,6 +4,7 @@ import json
 
 class BookingWizard(models.TransientModel):
     _name = 'booking.wizard'
+    _description = 'Wizard to create bookings in the backend.'
         
     date = fields.Date(required=True)
     space = fields.Many2one(comodel_name='calendar.event.location',required=True)

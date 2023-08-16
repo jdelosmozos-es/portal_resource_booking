@@ -8,3 +8,4 @@ access_booking_close_service_wizard,access.booking.close.service.wizard,model_bo
 access_booking_wizard,access.booking.wizard,model_booking_wizard,base.group_user,1,1,1,1
 access_booking_additional_info,access.booking.additional.info,model_booking_additional_information,,1,1,1,1
 access_booking_request,access.booking.request,model_booking_request,,1,1,1,1
+access_booking_type,access.booking.type,model_booking_resource_agenda_type,,1,1,1,1

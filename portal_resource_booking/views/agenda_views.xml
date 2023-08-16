@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record model='ir.ui.view' id='booking_resource_agenda_form_view'>
+        <field name='name'>Booking resource agenda form view</field>
+        <field name='model'>booking.resource.agenda</field>
+        <field name='arch' type='xml'>
+            <form string="Booking resource agenda">
+                <sheet>
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                    <h3>
+                    	<field name="display_name" />
+                    </h3>
+                    <group col="4">
+                    	<field name="space"/>
+                    	<field name="capacity"/>
+                    	<field name="type"/>
+                    	<span/>
+                    </group>
+                    <notebook>
+                        <page string="Booking resuource agenda">
+                            <group>
+                            	<group>
+                            		<field name="start_date" />
+                            		<field name="duration" />
+                            		<field name="end_date" />
+                            	</group>
+                                <group>
+                                	<field name="start_time_float" widget="float_time" />
+                                	<field name="start_time" invisible="1" />
+                                    <field name="minutes_slot" />
+                                    <field name="end_time_float" widget="float_time" />
+                                    <field name="end_time" invisible="1" />
+                                    <field name="event_duration" />
+                                    <field name="event_times" />
+                                </group>
+                                <group>
+                                    <field name="reminders" widget="many2many_tags" />
+                                </group>
+
+                            </group>
+                            <span class="o_form_label">Additional information</span>
+                            	<group>
+                            		<field name="additional_info_is_for_all_times" />
+                            	</group>
+                                <field name="additional_info" nolabel="1">
+                                	<tree string="Additional information" editable="bottom">
+                                		<field name="time_float" widget="float_time" attrs="{'invisible': ['|',('parent.additional_info_is_for_all_times','=',True),('time_float','=',False)]}" />
+                                		<field name="text" />
+                                		<field name="image" widget="image"/>
+                             		</tree>
+                                </field>
+                            <group>
+                                <field name='booking_slots' nolabel="1">
+                                    <tree string="Booking slots" editable="bottom" decoration-danger="is_open == False" decoration-mute="is_past == True">
+                                        <field name='is_past' invisible='1' />
+                                        <field name='start_datetime'/>
+                                        <field name='end_datetime' />
+                                        <field name='capacity'/>
+                                        <field name='occupancy'/>
+                                        <field name='availability'/>
+                                        <field name='is_open' />
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Other Info" name="other_info">
+                            <group string="Holidays">
+                                <field name='holiday_lines' nolabel="1">
+                                    <tree string="Holidays" editable="bottom">
+                                        <field name='name' />
+                                        <field name='start_date' />
+                                        <field name='end_date' />
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Weekoff">
+                                <field name="weekoffs" widget="many2many_tags" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record model='ir.ui.view' id='booking_resource_agenda_tree_view'>
+        <field name='name'>Booking resource agenda tree view</field>
+        <field name='model'>booking.resource.agenda</field>
+        <field name='arch' type='xml'>
+            <tree string='Booking resource agenda' default_order="start_date desc">
+                <field name='display_name' />
+                <field name="space"/>
+                <field name="type"/>
+                <field name="start_date"/>
+                <field name="duration" />
+                <field name="minutes_slot" />
+            </tree>
+        </field>
+    </record>
+    
+</odoo>

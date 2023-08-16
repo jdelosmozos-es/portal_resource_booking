@@ -1,0 +1,24 @@
+<odoo>
+	<data>
+		<record id="booking_type_tree_view" model='ir.ui.view'>
+        	<field name='name'>booking.type.tree.view</field>
+        	<field name='model'>booking.resource.agenda.type</field>
+        	<field name='arch' type='xml'>
+           		<tree editable='bottom'>
+	           		<field name="sequence" widget="handle"/>
+	           		<field name="name"/>
+	           </tree>
+	        </field>
+	   	</record>
+   	
+		<record id="booking_type_action" model="ir.actions.act_window">
+	        <field name="name">Booking agenda types</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">booking.resource.agenda.type</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+		
+		<menuitem id="booking_type_menu" name="Booking types" parent="menu_booking_resource_configuration" action="booking_type_action" sequence="6" />
+		
+	</data>
+</odoo>

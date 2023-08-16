@@ -17,7 +17,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/menues.xml',
-#        'views/web_online_appointment_view.xml',
+        'views/agenda_views.xml',
         'views/resource_view.xml',
 #        'views/appointment.xml',
         'wizard/close_service_wizard_view.xml',
@@ -25,6 +25,7 @@
 #        'config/res_config_settings_views.xml',
 #        'views/calendar_event_views.xml',
         'views/booking_request_view.xml',
+        'views/booking_type_view.xml',
     ],
 #    'assets': {
 #        'web.assets_frontend': [

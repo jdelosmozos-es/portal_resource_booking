@@ -3,6 +3,7 @@ import json
 
 class CloseServiceWizard(models.TransientModel):
     _name='booking.close.service.wizard'
+    _description = 'Wizard to close services.'
     
     name = fields.Char()
     date = fields.Date()
