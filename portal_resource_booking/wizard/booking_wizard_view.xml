@@ -12,7 +12,7 @@
 					<field name="slot_domain" invisible="1" />
 					<field name="slot" domain="slot_domain" widget="radio" attrs="{'invisible': [('num_persons','=',0)]}" />
 					<field name="partner" attrs="{'invisible': [('slot','=',False)]}" />
-					<field name="instructions" attrs="{'invisible': [('instructions','=',False)]}"/>
+					<field name="additional_info" attrs="{'invisible': [('additional_info','=',False)]}"/>
 					<field name="requests" widget="many2many_tags" attrs="{'invisible': [('partner','=',False)]}"/>
 					<field name="special_request" attrs="{'invisible': [('partner','=',False)]}"/>
 				</group>

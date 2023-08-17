@@ -21,8 +21,6 @@ class BookingResourceAgenda(models.Model):
     start_time_float = fields.Float("First bookable hour", required=True)
     minutes_slot = fields.Char("Slot in mins.", help='Period between bookable hours')
     end_time_float = fields.Float("Last bookable hour", required=True) #TODO: Poner por defecto tres horas después de la inicial
-#    start_time = fields.Datetime(compute="_compute_start_end_time")
-#    end_time = fields.Datetime(compute="_compute_start_end_time")
     duration = fields.Integer('Duration in days', required=True, default=1)
     booking_slots = fields.One2many(comodel_name='booking.resource.agenda.slot', inverse_name='agenda', string='Booking lines')
     holiday_lines = fields.One2many('booking.holiday', 'agenda', 'Holidays')
@@ -39,11 +37,12 @@ class BookingResourceAgenda(models.Model):
 
     @api.depends('type','space')
     def _compute_display_name(self):
-        self.display_name = '%s%s%s' % (
-                        '[%s] ' % self.space.name if self.space.name else '',
-                        '[%s] ' % self.type.name if self.type.name else '',
-                        self.name if self.name else ''
-                    )
+        for record in self:
+            record.display_name = '%s%s%s' % (
+                            '[%s] ' % record.space.name if record.space.name else '',
+                            '[%s] ' % record.type.name if record.type.name else '',
+                            record.name if record.name else ''
+                        )
         
     @api.onchange('additional_info_is_for_all_times')
     def _onchange_additional_info_is_for_all_times(self):
@@ -51,11 +50,11 @@ class BookingResourceAgenda(models.Model):
             if len(self.additional_info) == 1:
                 self.additional_info[0].time_float = False
         else:
-            if self.start_time == self.end_time and len(self.additional_info)==1:
+            if self.start_time_float == self.end_time_float and len(self.additional_info)==1:
                 self.additional_info[0].time_float = self.start_time_float
                 
     @api.constrains('additional_info','additional_info_is_for_all_times')
-    def _check_additinal_onfo(self):
+    def _check_additional_info(self):
         for record in self:
             if record.additional_info_is_for_all_times:
                 if len(record.additional_info) > 1:
@@ -69,26 +68,21 @@ class BookingResourceAgenda(models.Model):
                     if additional_info.time_float in times_float:
                         raise ValidationError(_('You cannot define two additional informations for the same time'))
                     times_float.append(additional_info.time_float)
-                    
-    @api.depends('start_time_float','end_time_float')
-    def _compute_start_end_time(self):
-        DateTimeHelper = self.env['booking.datetime.helper']
-        for record in self:
-            record.start_time = DateTimeHelper.get_server_time_from_float(record.start_time_float)
-            record.end_time = DateTimeHelper.get_server_time_from_float(record.end_time_float)
-        
-    @api.depends('start_time','minutes_slot','end_time')
+                          
+    @api.depends('start_time_float','minutes_slot','end_time_float')
     def _compute_times(self):
         DateTimeHelper = self.env['booking.datetime.helper']
         for record in self:
-            if record.start_time and record.end_time:
-                if record.start_time == record.end_time:
-                    record.event_times = DateTimeHelper.get_user_datetime(record.start_time).strftime('%H:%M')
+            if record.start_time_float and record.end_time_float:
+                start_time = datetime.combine(record.start_date,datetime.min.time()) + relativedelta(hours=record.start_time_float)
+                if record.start_time_float == record.end_time_float:
+                    record.event_times = start_time.strftime('%H:%M')
                 else:
                     if record.minutes_slot:
+                        end_time = datetime.combine(record.start_date,datetime.min.time()) + relativedelta(hours=record.end_time_float)
                         datetimes = date_utils.date_range(
-                                            DateTimeHelper.get_user_datetime(record.start_time),
-                                            DateTimeHelper.get_user_datetime(record.end_time),
+                                            start_time,
+                                            end_time,
                                             step=relativedelta(minutes=int(record.minutes_slot))
                                     )
                         record.event_times = ' - '.join([x.strftime('%H:%M') for x in datetimes])
@@ -119,13 +113,12 @@ class BookingResourceAgenda(models.Model):
             
     @api.onchange('minutes_slot')
     def _onchange_minutes_slot(self):
-        for record in self:
-            if not record.minutes_slot or record.minutes_slot == '' or record.minutes_slot == '0':
-                record.end_time_float = record.start_time_float
-            else:
-                record._onchange_endtime()
+        if not self.minutes_slot or self.minutes_slot == '' or self.minutes_slot == '0':
+            self.end_time_float = self.start_time_float
+        else:
+            self._onchange_endtime()
                 
-    @api.onchange('end_time')
+    @api.onchange('end_time_float')
     def _onchange_endtime(self):
         for record in self:
             self._check_times()
@@ -153,7 +146,7 @@ class BookingResourceAgenda(models.Model):
     
     def write(self, values):
         res = super(BookingResourceAgenda, self).write(values)
-        fields_list = ['minutes_slot', 'start_date', 'start_time_float', 'end_time_float', 'duration', 'holiday_ids', 'weekoff_ids']
+        fields_list = ['minutes_slot', 'start_date', 'start_time_float', 'end_time_float', 'duration', 'holiday_ids', 'weekoffs']
         if any(key in values for key in fields_list):
             for record in self:
                 record.booking_slots.unlink()
@@ -161,8 +154,6 @@ class BookingResourceAgenda(models.Model):
         return res
     
     def _generate_agenda(self):
-        import sys;sys.path.append(r'/home/javier/eclipse/jee-2021/eclipse/plugins/org.python.pydev.core_10.1.4.202304151203/pysrc')
-        import pydevd;pydevd.settrace('127.0.0.1',port=9999)
         DateTimeHelper = self.env['booking.datetime.helper']
         Slot = self.env['booking.resource.agenda.slot']
         for agenda in self:
@@ -184,9 +175,9 @@ class BookingResourceAgenda(models.Model):
                 weekoffdays = agenda.weekoffs.mapped('dayofweek')
                 if str(day.weekday()) in weekoffdays:
                     continue
-                start_datetime = datetime.combine(day.date(), agenda.start_time.time())
+                start_datetime = datetime.combine(day.date(),datetime.min.time()) + relativedelta(hours=agenda.start_time_float)
                 if agenda.minutes_slot:
-                    end_datetime = datetime.combine(day.date(), agenda.end_time.time())
+                    end_datetime = datetime.combine(day.date(),datetime.min.time()) + relativedelta(hours=agenda.end_time_float)
                     datetimes = date_utils.date_range(start_datetime,end_datetime,step=relativedelta(minutes=int(agenda.minutes_slot)))
                 else:
                     datetimes = [start_datetime]
@@ -205,13 +196,45 @@ class BookingResourceAgenda(models.Model):
                     slot = {
                         'agenda': agenda.id,
 #                        'duration': duration,
-                        'start_datetime': slot_start,
-                        'end_datetime': slot_end,
+                        'start_datetime': DateTimeHelper.get_server_time(slot_start),
+                        'end_datetime': DateTimeHelper.get_server_time(slot_end),
                     }
                     existing_slot = Slot.search([('start_datetime', '=', slot_start), ('end_datetime', '=', slot_end), ('agenda', '=', agenda.id)])
                     if not existing_slot:
                         Slot.create(slot)
         return True                     
+
+    @api.model
+    def get_time_slots(self, date, num_persons, space_id):
+        import sys;sys.path.append(r'/home/javier/eclipse/jee-2021/eclipse/plugins/org.python.pydev.core_10.1.4.202304151203/pysrc')
+        import pydevd;pydevd.settrace('127.0.0.1',port=9999)
+        start = datetime.combine(date,datetime.min.time())
+        end = start + timedelta(hours=24)
+        Slot = self.env['booking.resource.agenda.slot']
+        open_slots = Slot.sudo().search([('start_datetime', '>=', start),
+                                             ('end_datetime','<',end),
+                                             ('space','=',space_id),
+                                             ('is_open','=',True)])
+        available_slots = Slot
+        for slot in open_slots:
+            event_duration_minutes = slot.agenda.event_duration_minutes
+            if event_duration_minutes:
+                event_end_time = slot.start_datetime + timedelta(minutes=event_duration_minutes)
+            else:
+                event_end_time = slot.end_datetime
+            event_slots = Slot.sudo().search([
+                                        ('start_datetime','>=', slot.start_datetime),
+                                        ('start_datetime','<=',event_end_time)
+                                    ])
+            if event_slots and min(event_slots.mapped('availability')) >= int(num_persons):
+                available_slots |= slot
+#        slots = Slot
+#        for line in available_lines:
+#            start_datetime = fields.Datetime.to_string(line.start_datetime)
+#            date = line.line_id.get_tz_date(datetime.strptime(start_datetime, DEFAULT_SERVER_DATETIME_FORMAT), self.env.context['tz'])
+#            if int(date.day) == int(day) and int(date.month) == int(month) and int(date.year) == int(year):
+#                slots += line
+        return available_slots
 
 class BookingResourceAgendaSlot(models.Model):
     _name = 'booking.resource.agenda.slot'
@@ -273,12 +296,15 @@ class BookingResourceAgendaSlot(models.Model):
         return result
     
     def get_additional_info(self):
+        DateTimeHelper = self.env['booking.datetime.helper']
         if self.agenda.additional_info_is_for_all_times:
             if self.agenda.additional_info:
                 return self.agenda.additional_info[0].text
         time = self.start_datetime.time()
-        lines = filter(lambda x: x.time.time() == time, self.agenda.additional_info)
-        return list(lines)[0].text
+        lines = filter(lambda x: DateTimeHelper.get_server_time_from_float(x.time_float).time() == time, self.agenda.additional_info)
+        return list(lines)[0].text if lines else False
+
+        
     
 class BookingHoliday(models.Model):
     _name = 'booking.holiday'

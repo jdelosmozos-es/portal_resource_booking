@@ -2,6 +2,7 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
 from odoo.tools import date_utils
+from datetime import datetime
 
 class BookingAdditionalInformation(models.Model):
     _name = 'booking.additional.information'
@@ -11,27 +12,24 @@ class BookingAdditionalInformation(models.Model):
     time_float = fields.Float()
     text = fields.Char(required=True)
     image = fields.Image()
-    time = fields.Datetime(compute="_compute_time")
-    
-    @api.depends('time_float')
-    def _compute_time(self):
-        DateTimeHelper = self.env['booking.datetime.helper']
-        for record in self:
-            record.time = DateTimeHelper.get_server_time_from_float(record.time_float)
         
-    @api.constrains('hour')
+    @api.constrains('time_float')
     def _check_hour(self):
+        today = fields.Datetime.today()
         for record in self:
-            if record.agenda.additinal_info_is_for_all_times:
-                if record.hour != False:
+            if record.agenda.additional_info_is_for_all_times:
+                if record.time_float != False:
                     raise ValidationError("You cannot define hour if instruction is for all times.")
                 return
+            start_time = datetime.combine(today,datetime.min.time()) + relativedelta(hours=record.agenda.start_time_float)
             if int(record.agenda.minutes_slot) == 0:
-                valid_datetimes = [record.agenda.start_time]
+                valid_datetimes = [start_time]
             else:
-                valid_datetimes = date_utils.date_range(record.agendastart_time,record.agenda.end_time,
+                end_time = datetime.combine(today,datetime.min.time()) + relativedelta(hours=record.agenda.end_time_float)
+                valid_datetimes = date_utils.date_range(start_time,end_time,
                                             step=relativedelta(minutes=int(record.agenda.minutes_slot))
                                     )
-            if record.time.time() not in [x.time() for x in valid_datetimes]:
+            my_time = datetime.combine(today,datetime.min.time()) + relativedelta(hours=record.time_float)
+            if my_time not in valid_datetimes:
                 raise ValidationError("The hour should be one of %s." % record.agenda.event_times)
     

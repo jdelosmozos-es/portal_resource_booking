@@ -18,7 +18,7 @@
 	        <field name="view_mode">tree,form</field>
 	    </record>
 		
-		<menuitem id="booking_type_menu" name="Booking types" parent="menu_booking_resource_configuration" action="booking_type_action" sequence="6" />
+		<menuitem id="booking_type_menu" name="Booking types" parent="menu_booking_resource_configuration" action="booking_type_action" sequence="3" />
 		
 	</data>
 </odoo>

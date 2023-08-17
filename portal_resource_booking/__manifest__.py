@@ -13,7 +13,7 @@
     'category': 'Website/Website',
     'depends': ['website', 'contacts', 'calendar_resource_location_mac5'],
     'data': [
-#        'data/appointment_data.xml',
+        'data/appointment_data.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/menues.xml',

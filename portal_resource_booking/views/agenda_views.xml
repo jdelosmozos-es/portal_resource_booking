@@ -20,7 +20,7 @@
                     	<span/>
                     </group>
                     <notebook>
-                        <page string="Booking resuource agenda">
+                        <page string="Booking resource agenda">
                             <group>
                             	<group>
                             		<field name="start_date" />
@@ -29,10 +29,8 @@
                             	</group>
                                 <group>
                                 	<field name="start_time_float" widget="float_time" />
-                                	<field name="start_time" invisible="1" />
                                     <field name="minutes_slot" />
                                     <field name="end_time_float" widget="float_time" />
-                                    <field name="end_time" invisible="1" />
                                     <field name="event_duration" />
                                     <field name="event_times" />
                                 </group>
@@ -41,7 +39,7 @@
                                 </group>
 
                             </group>
-                            <span class="o_form_label">Additional information</span>
+                            <group string="Additional information">
                             	<group>
                             		<field name="additional_info_is_for_all_times" />
                             	</group>
@@ -52,6 +50,7 @@
                                 		<field name="image" widget="image"/>
                              		</tree>
                                 </field>
+                            </group>
                             <group>
                                 <field name='booking_slots' nolabel="1">
                                     <tree string="Booking slots" editable="bottom" decoration-danger="is_open == False" decoration-mute="is_past == True">
@@ -67,6 +66,10 @@
                             </group>
                         </page>
                         <page string="Other Info" name="other_info">
+                        	<group string="Day-off">
+                        		<field name="dayoff_start" widget="float_time"/>
+                        		<field name="dayoff_end" widget="float_time"/>
+                        	</group>
                             <group string="Holidays">
                                 <field name='holiday_lines' nolabel="1">
                                     <tree string="Holidays" editable="bottom">

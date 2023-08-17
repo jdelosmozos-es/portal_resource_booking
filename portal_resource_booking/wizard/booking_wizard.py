@@ -14,20 +14,17 @@ class BookingWizard(models.TransientModel):
     slot_domain = fields.Char(compute='_compute_slot_domain')
     partner = fields.Many2one(comodel_name='res.partner',required=True)
 #    comments = fields.Char()
-    instructions = fields.Text(compute='_compute_instructions')
+    additional_info = fields.Text(compute='_compute_additional_info')
     requests = fields.Many2many(comodel_name='booking.request')
     special_request = fields.Char()
     
     @api.depends('slot')
-    def _compute_instructions(self):
+    def _compute_additional_info(self):
         for record in self:
-            if not record.slot:
-                record.instructions = False
+            if record.slot:
+                record.additional_info = record.slot.get_additional_info()
             else:
-                time = self.env['booking.resource.agenda'].get_tz_date(record.slot.start_datetime,self.env.user.tz).strftime('%H:%M')
-                hour = self.env['booking.additional.information']._get_hour(time)
-                instruction = record.slot.line_id.instructions.filtered(lambda x:x.hour == hour)
-                record.instructions = instruction.text
+                record.additional_info = False
                 
     @api.depends('date')
     def _compute_space_domain(self):
@@ -35,27 +32,26 @@ class BookingWizard(models.TransientModel):
         if self.date:
             start_date = self.date
             end_date = start_date + timedelta(days=1)
-            Line = self.env['booking.resource.agenda.slot']
-            calendar_lines = Line.search([('start_datetime', '>=', start_date),
+            Slot = self.env['booking.resource.agenda.slot']
+            slots = Slot.search([('start_datetime', '>=', start_date),
                                            ('end_datetime','<',end_date),
                                                  ('is_open','=',True)])
-            self.space_domain = json.dumps([('id','in',calendar_lines.mapped('space').ids)])
+            self.space_domain = json.dumps([('id','in',slots.mapped('space').ids)])
         else:
             self.space_domain = json.dumps([])
     
     @api.depends('date','space','num_persons')   
     def _compute_slot_domain(self):
-        self.ensure_one()
-        if self.date and self.space and self.num_persons != 0:
-            Appointment = self.env['booking.resource.agenda']
-            date = Appointment.get_tz_date(datetime(self.date.year, self.date.month, self.date.day), self.env.context['tz'])
-            slots = Appointment.get_time_slots(date.strftime("%d-%m-%Y"), self.num_persons, self.space.id)
-            self.slot_domain = json.dumps([('id','in',slots.ids)])
-        else:
-            self.slot_domain = json.dumps([])
+        for record in self:
+            if record.date and record.space and record.num_persons != 0:
+                Agenda = self.env['booking.resource.agenda']
+                slots = Agenda.get_time_slots(record.date, record.num_persons, record.space.id)
+                record.slot_domain = json.dumps([('id','in',slots.ids)])
+            else:
+                record.slot_domain = json.dumps([])
     
     def action_book(self):
-        line = self.slot
+        slot = self.slot
         start_date = line.start_datetime
         calendar_id = line.line_id
         if calendar_id.event_duration_minutes:

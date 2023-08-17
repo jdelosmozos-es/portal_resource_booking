@@ -9,9 +9,14 @@ class DateTimeHelper(models.AbstractModel):
     
     @api.model
     def get_server_time_from_float(self, float_time):
-        #debe coger float_time y devolver un Datetime de hoy con la hora convertida a UTC desde tz del user
         minutes = float_time*60
         local_time = datetime.datetime.combine(fields.Datetime.today(),datetime.time()) + datetime.timedelta(minutes=minutes)
+        localized_local_time = pytz.timezone(self.env.user.tz).localize(local_time)
+        server_time = localized_local_time.astimezone(pytz.utc)
+        return server_time.replace(tzinfo=None)
+    
+    @api.model
+    def get_server_time(self, local_time):
         localized_local_time = pytz.timezone(self.env.user.tz).localize(local_time)
         server_time = localized_local_time.astimezone(pytz.utc)
         return server_time.replace(tzinfo=None)
