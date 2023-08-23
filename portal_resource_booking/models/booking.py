@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, UserError
 from odoo.tools import date_utils
 from dateutil.relativedelta import relativedelta 
@@ -71,7 +71,6 @@ class BookingResourceAgenda(models.Model):
                           
     @api.depends('start_time_float','minutes_slot','end_time_float')
     def _compute_times(self):
-        DateTimeHelper = self.env['booking.datetime.helper']
         for record in self:
             if record.start_time_float and record.end_time_float:
                 start_time = datetime.combine(record.start_date,datetime.min.time()) + relativedelta(hours=record.start_time_float)
@@ -135,13 +134,15 @@ class BookingResourceAgenda(models.Model):
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
         default = dict(default or {})
-        default.update({'calendar_line_ids': False, 'duration': 0})
+        default.update({'booking_slots': False, 'duration': 1})
+        self = self.with_context( { 'agenda_copy': True } )
         return super(BookingResourceAgenda, self).copy(default)
     
     @api.model
     def create(self, vals):
         agenda = super(BookingResourceAgenda, self).create(vals)
-        agenda._generate_agenda()
+        if not 'agenda_copy' in self.env.context or not self.env.context.get('agenda_copy'):
+            agenda._generate_agenda()
         return agenda
     
     def write(self, values):
@@ -205,16 +206,18 @@ class BookingResourceAgenda(models.Model):
         return True                     
 
     @api.model
-    def get_time_slots(self, date, num_persons, space_id):
-        import sys;sys.path.append(r'/home/javier/eclipse/jee-2021/eclipse/plugins/org.python.pydev.core_10.1.4.202304151203/pysrc')
-        import pydevd;pydevd.settrace('127.0.0.1',port=9999)
+    def get_time_slots(self, date, num_persons, space_id, online=False):
         start = datetime.combine(date,datetime.min.time())
         end = start + timedelta(hours=24)
         Slot = self.env['booking.resource.agenda.slot']
-        open_slots = Slot.sudo().search([('start_datetime', '>=', start),
-                                             ('end_datetime','<',end),
-                                             ('space','=',space_id),
-                                             ('is_open','=',True)])
+        domain = [
+                    ('start_datetime', '>=', start),
+                    ('end_datetime','<',end),
+                    ('space','=',space_id),
+                ]
+        if online:
+            domain.append(('is_open_online','=',True))
+        open_slots = Slot.sudo().search(domain)
         available_slots = Slot
         for slot in open_slots:
             event_duration_minutes = slot.agenda.event_duration_minutes
@@ -236,21 +239,26 @@ class BookingResourceAgenda(models.Model):
 #                slots += line
         return available_slots
 
+    def get_last_time_in_date(self, date):
+        dates_lines = self.booking_slots.filtered(lambda x: x.start_datetime.date() == date)
+        last_date_line = dates_lines.sorted(key=lambda x: x.end_datetime.time(),reverse=True)[0]
+        return last_date_line.end_datetime + timedelta(minutes=int(self.minutes_slot))
+    
 class BookingResourceAgendaSlot(models.Model):
     _name = 'booking.resource.agenda.slot'
     _description = 'Every time slot from an agenda that is bookable.'
 
-    agenda = fields.Many2one('booking.resource.agenda', string='Booking agenda', ondelete='cascade')
-    space = fields.Many2one(related='agenda.space')
+    agenda = fields.Many2one('booking.resource.agenda', string='Booking agenda', ondelete='cascade',required=True)
+    space = fields.Many2one(related='agenda.space',store=True)
     type = fields.Many2one(related='agenda.type')
-    start_datetime = fields.Datetime()
-    end_datetime = fields.Datetime()
-#    duration = fields.Float('Duration in mins') #TODO: ¿Ésto se utiliza para algo?
+    start_datetime = fields.Datetime(required=True)
+    end_datetime = fields.Datetime(required=True)
     capacity = fields.Integer(related='space.capacity')
     occupancy = fields.Integer(readonly=True)
     availability = fields.Integer(compute='_compute_availability', store=True)
-    is_open = fields.Boolean('Open', default=True)
+    is_open_online = fields.Boolean('Open', default=True)
     is_past = fields.Boolean('Past', compute='_compute_is_past')
+    calendar_events = fields.Many2many(comodel_name='calendar.event')
                             
     _sql_constraints = [
                             ('slot_uniq', 'unique (space,start_datetime)','There cannot be two slots at the same time for the same space.')
@@ -272,6 +280,7 @@ class BookingResourceAgendaSlot(models.Model):
         for record in self:
             if record.start_datetime < fields.Datetime.now():
                 record.is_past = True
+                record.is_open_online = False
             else:
                 record.is_past = False
         
@@ -283,7 +292,7 @@ class BookingResourceAgendaSlot(models.Model):
         
     def unlink(self):
         for record in self:
-            if record.occupancy != 0:
+            if record.occupancy > 0:
                 raise UserError(_('You cannot delete an already reserved slot.'))
         super(BookingResourceAgendaSlot, self).unlink()
 
@@ -301,8 +310,11 @@ class BookingResourceAgendaSlot(models.Model):
             if self.agenda.additional_info:
                 return self.agenda.additional_info[0].text
         time = self.start_datetime.time()
-        lines = filter(lambda x: DateTimeHelper.get_server_time_from_float(x.time_float).time() == time, self.agenda.additional_info)
-        return list(lines)[0].text if lines else False
+        lines = list(filter(lambda x: DateTimeHelper.get_server_time_from_float(x.time_float).time() == time, self.agenda.additional_info))
+        if lines:
+            return lines[0].text
+        else:
+            return False
 
         
     

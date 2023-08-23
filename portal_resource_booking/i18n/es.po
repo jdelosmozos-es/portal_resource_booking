@@ -21,7 +21,7 @@ msgid ""
 "<span attrs=\"{'invisible': ['|',('agendas_domain','=','[]'),('date','=',False)]}\">Select the service to close.</span>\n"
 "\t\t\t\t\t<span attrs=\"{'invisible': ['|',('agendas_domain','!=','[]'),('date','=',False)]}\">There is no service open this date.</span>"
 msgstr ""
-"<span attrs=\"{'invisible': ['|',('agendas_domain','=','[]'),('date','=',False)]}\">Selecciona el servicio a cerrar.</span>\n"
+"<span attrs=\"{'invisible': ['|',('agendas_domain','=','[]'),('date','=',False)]}\">Selecciona el servicio.</span>\n"
 "\t\t\t\t\t<span attrs=\"{'invisible': ['|',('agendas_domain','!=','[]'),('date','=',False)]}\">No hay ningún servicio abierto en esa fecha.</span>"
 
 #. module: portal_resource_booking
@@ -31,13 +31,43 @@ msgid "Accept"
 msgstr "Aceptar"
 
 #. module: portal_resource_booking
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__acc_from_cust
+msgid "Accepted from customer"
+msgstr "Reconfirmada por el cliente"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__acc_from_res_mgr
+msgid "Accepted from reservations manager"
+msgstr "Aceptada por el restaurante"
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request__active
-#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__active
 msgid "Active"
 msgstr "Activo"
 
 #. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__additional_info
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__additional_info
 msgid "Additional Info"
 msgstr "Información adicional"
 
@@ -45,6 +75,11 @@ msgstr "Información adicional"
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__additional_info_is_for_all_times
 msgid "Additional Info Is For All Times"
 msgstr "La información adicional es para todas las horas"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__additional_information
+msgid "Additional Information"
+msgstr "Información adicional"
 
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_additional_information
@@ -67,7 +102,7 @@ msgstr "Agenda"
 #. module: portal_resource_booking
 #: model:ir.ui.menu,name:portal_resource_booking.menu_booking_resource_agenda_configuration
 msgid "Agenda Configuration"
-msgstr "Configuración de servicios"
+msgstr "Servicios"
 
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_resource_agenda
@@ -147,13 +182,8 @@ msgstr "Agenda de servicios"
 
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_agenda_form_view
-msgid "Booking resource agenda"
-msgstr "Agenda de servicios"
-
-#. module: portal_resource_booking
-#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_agenda_form_view
 msgid "Booking slots"
-msgstr ""
+msgstr "Horas reservables"
 
 #. module: portal_resource_booking
 #: model:ir.ui.menu,name:portal_resource_booking.booking_type_menu
@@ -168,6 +198,21 @@ msgstr "Creación de reserva"
 #. module: portal_resource_booking
 #: model:ir.ui.menu,name:portal_resource_booking.menu_booking_resource
 msgid "Bookings"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model,name:portal_resource_booking.model_calendar_attendee
+msgid "Calendar Attendee Information"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model,name:portal_resource_booking.model_calendar_event
+msgid "Calendar Event"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__calendar_events
+msgid "Calendar Events"
 msgstr "Reservas"
 
 #. module: portal_resource_booking
@@ -187,17 +232,12 @@ msgstr "Capacidad"
 #: model:ir.actions.act_window,name:portal_resource_booking.action_close_service
 #: model:ir.ui.menu,name:portal_resource_booking.menu_close_service
 msgid "Close service"
-msgstr "Cerrar servicio"
+msgstr "No aceptar reservas online"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__color
 msgid "Color"
 msgstr ""
-
-#. module: portal_resource_booking
-#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__company_id
-msgid "Company"
-msgstr "Compañía"
 
 #. module: portal_resource_booking
 #: model:ir.ui.menu,name:portal_resource_booking.menu_booking_resource_configuration
@@ -231,6 +271,24 @@ msgid "Created on"
 msgstr ""
 
 #. module: portal_resource_booking
+#: code:addons/portal_resource_booking/models/calendar_attendee.py:0
+#: code:addons/portal_resource_booking/models/calendar_attendee.py:0
+#, python-format
+msgid "Customer has cancelled the booking."
+msgstr "El cliente ha cancelado la reserva."
+
+#. module: portal_resource_booking
+#: code:addons/portal_resource_booking/models/calendar_attendee.py:0
+#, python-format
+msgid "Customer has confirmed the booking."
+msgstr "El cliente ha reconfirmado la reserva."
+
+#. module: portal_resource_booking
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__customer_not_shown
+msgid "Customer not shown"
+msgstr "El cliente no se ha presentado"
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__date
 msgid "Date"
@@ -257,9 +315,9 @@ msgid "Day-off start"
 msgstr "Hora inicial"
 
 #. module: portal_resource_booking
-#: model:ir.model.fields,help:portal_resource_booking.field_calendar_event_location__resource_calendar_id
-msgid "Define the schedule of resource"
-msgstr "Define la planificación del espacio"
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__declined
+msgid "Declined"
+msgstr "Declinada"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__note
@@ -344,9 +402,19 @@ msgid "First bookable hour"
 msgstr "Primera hora reservable"
 
 #. module: portal_resource_booking
+#: model:ir.model.fields,help:portal_resource_booking.field_calendar_event__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__4
 msgid "Friday"
 msgstr "Viernes"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__fully_accepted
+msgid "Fully accepted"
+msgstr "Confirmada completamente"
 
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_datetime_helper
@@ -373,16 +441,19 @@ msgid "ID"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,help:portal_resource_booking.field_calendar_event__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,help:portal_resource_booking.field_booking_resource_agenda__event_duration
 msgid "If not set the duration is all available"
 msgstr "Si no se especifica la duración es toda la posible"
-
-#. module: portal_resource_booking
-#: model:ir.model.fields,help:portal_resource_booking.field_calendar_event_location__active
-msgid ""
-"If the active field is set to False, it will allow you to hide the resource "
-"record without removing it."
-msgstr ""
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__image
@@ -411,9 +482,18 @@ msgid "Image 512"
 msgstr ""
 
 #. module: portal_resource_booking
-#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__instructions
-msgid "Instructions"
-msgstr "Información adicional"
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__is_from_reservation_system
+msgid "Is From Reservation System"
+msgstr "Creada por el sistema de reservas"
+
+#. module: portal_resource_booking
+#: code:addons/portal_resource_booking/models/calendar_event.py:0
+#, python-format
+msgid ""
+"Is not supported to modify the booking. You shoud cancel and create a new "
+"one instead."
+msgstr ""
+"No está soportado modificar la reserva, en su lugar debes cancelarla y crearla de nuevo."
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information____last_update
@@ -460,6 +540,12 @@ msgid "Last bookable hour"
 msgstr "Última hora reervable"
 
 #. module: portal_resource_booking
+#: code:addons/portal_resource_booking/wizard/booking_wizard.py:0
+#, python-format
+msgid "Manual booking by user internal"
+msgstr "Reserva manual efectuada por un usuario interno"
+
+#. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_calendar_event_location
 msgid "Meeting Locations"
 msgstr "Espacios"
@@ -468,6 +554,11 @@ msgstr "Espacios"
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__0
 msgid "Monday"
 msgstr "Lunes"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__name
@@ -479,9 +570,58 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: portal_resource_booking
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__needsaction
+msgid "Needs Action"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.ui.menu,name:portal_resource_booking.menu_new_booking
 msgid "New booking"
 msgstr "Nueva reserva"
+
+#. module: portal_resource_booking
+#: code:addons/portal_resource_booking/models/calendar_event.py:0
+#, python-format
+msgid "New booking received on short notice"
+msgstr "Nueva reserva sin antelación"
+
+#. module: portal_resource_booking
+#: code:addons/portal_resource_booking/models/calendar_event.py:0
+#, python-format
+msgid "New booking. Confirm or cancel."
+msgstr "Nueva reserva. Confirmar o cancelar."
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: portal_resource_booking
+#: code:addons/portal_resource_booking/models/calendar_event.py:0
+#, python-format
+msgid "No availability in these date and time."
+msgstr "Sin disponibilidad en esa fecha y hora."
+
+#. module: portal_resource_booking
+#: code:addons/portal_resource_booking/models/calendar_event.py:0
+#, python-format
+msgid "No availability in this date and time."
+msgstr "Sin disponibilidad en esa fecha y hora."
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__num_persons
@@ -494,9 +634,9 @@ msgid "Occupancy"
 msgstr "Ocupación"
 
 #. module: portal_resource_booking
-#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__is_open
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__is_open_online
 msgid "Open"
-msgstr "Abierto"
+msgstr "Abierto online"
 
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_agenda_form_view
@@ -544,9 +684,20 @@ msgid "Requests"
 msgstr "Peticiones"
 
 #. module: portal_resource_booking
-#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__resource_id
-msgid "Resource"
-msgstr "Recurso"
+#: code:addons/portal_resource_booking/models/calendar_event.py:0
+#, python-format
+msgid "Reservation system message"
+msgstr "Mensaje del sistema de reservas"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__resource_occupancy
+msgid "Resource occupancy"
+msgstr "Num. de personas"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_user_id
+msgid "Responsible User"
+msgstr ""
 
 #. module: portal_resource_booking
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__5
@@ -571,13 +722,18 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__minutes_slot
 msgid "Slot in mins."
-msgstr "Intervalo entre horas reservables"
+msgstr "Intervalo entre horas reservables (minutos)"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__slots
+msgid "Slots"
+msgstr "Horas reservables"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__space
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__space
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__space
-#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__name
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__resource
 msgid "Space"
 msgstr "Espacio"
 
@@ -594,6 +750,7 @@ msgstr "Espacios"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__special_request
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__special_request
 msgid "Special Request"
 msgstr "Petición especial"
 
@@ -607,6 +764,20 @@ msgstr "Fecha inicial"
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__start_datetime
 msgid "Start Datetime"
 msgstr "Hora inicial"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,help:portal_resource_booking.field_calendar_event__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
 
 #. module: portal_resource_booking
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__6
@@ -624,13 +795,6 @@ msgid "There cannot be two slots at the same time for the same space."
 msgstr "No puede haber dos horas reservables para la misma hora y el mismo espacio."
 
 #. module: portal_resource_booking
-#: model:ir.model.fields,help:portal_resource_booking.field_calendar_event_location__tz
-msgid ""
-"This field is used in order to define in which timezone the resources will "
-"work."
-msgstr ""
-
-#. module: portal_resource_booking
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__3
 msgid "Thursday"
 msgstr "Jueves"
@@ -638,11 +802,6 @@ msgstr "Jueves"
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__time_float
 msgid "Time Float"
-msgstr "Hora"
-
-#. module: portal_resource_booking
-#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__tz
-msgid "Timezone"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -660,6 +819,11 @@ msgstr "Tipo"
 #: model:ir.model,name:portal_resource_booking.model_booking_resource_agenda_type
 msgid "Type of agenda, shown in bookings."
 msgstr "Tipo de servicio mostrado en las reservas"
+
+#. module: portal_resource_booking
+#: model:ir.model.fields,help:portal_resource_booking.field_calendar_event__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
 
 #. module: portal_resource_booking
 #: model:res.groups,name:portal_resource_booking.group_appointment_user
@@ -689,17 +853,12 @@ msgstr "Días de descanso"
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_close_service_wizard
 msgid "Wizard to close services."
-msgstr "Cerrar servicio."
+msgstr "No aceptar reservas online."
 
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_wizard
 msgid "Wizard to create bookings in the backend."
 msgstr "Crear reserva."
-
-#. module: portal_resource_booking
-#: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__resource_calendar_id
-msgid "Working Hours"
-msgstr "Horas de trabajo"
 
 #. module: portal_resource_booking
 #: code:addons/portal_resource_booking/models/booking.py:0

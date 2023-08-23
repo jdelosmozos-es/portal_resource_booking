@@ -1,15 +1,13 @@
-from odoo import models, fields, api, _
+from odoo import models, fields
 
 class Space(models.Model):
     _name = 'calendar.event.location'
-    _inherit = ["calendar.event.location","resource.mixin", "image.mixin"]
+    _inherit = ["calendar.event.location", "image.mixin"]
     
-    name = fields.Char("Space", related='resource_id.name', store=True, readonly=False)
-    capacity = fields.Integer(required=True)
+    capacity = fields.Integer(required=True, default=0)
     note = fields.Text(
         'Description',
         help="Description of the space.")
-    active = fields.Boolean('Active', related='resource_id.active', default=True, store=True, readonly=False)
     color = fields.Integer('Color')
     agendas = fields.One2many(comodel_name='booking.resource.agenda', inverse_name='space', string='Booking agenda')
 #    bookings = fields.One2many(comodel_name='booking.booking', inverse_name='space', string='Bookings')

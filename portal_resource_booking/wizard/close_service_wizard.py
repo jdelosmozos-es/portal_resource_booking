@@ -15,7 +15,7 @@ class CloseServiceWizard(models.TransientModel):
         for record in self:
             agendas = self.env['booking.resource.agenda'].search([
                 ('start_date','<=',record.date),('end_date','>=',record.date),
-            ]).filtered(lambda x: record.date in {y.date() for y in x.calendar_line_ids.mapped('start_datetime')})
+            ]).filtered(lambda x: record.date in {y.date() for y in x.booking_slots.mapped('start_datetime')})
             if agendas:
                 record.agendas_domain = json.dumps([('id','in',agendas.ids)])
             else:
@@ -23,7 +23,7 @@ class CloseServiceWizard(models.TransientModel):
 
     def action_close_service(self):
         lines = self.env['booking.resource.agenda.slot'].search([
-                    ('line_id','in',self.calendars.ids),
+                    ('agenda','in',self.agendas.ids),
             ]).filtered(lambda x:  x.start_datetime.date() == self.date)
-        lines.is_open = False
+        lines.is_open_online = False
         return

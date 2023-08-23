@@ -13,21 +13,21 @@
     'category': 'Website/Website',
     'depends': ['website', 'contacts', 'calendar_resource_location_mac5'],
     'data': [
-        'data/appointment_data.xml',
+        'data/booking_data.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
-        'views/menues.xml',
         'views/agenda_views.xml',
-        'views/resource_view.xml',
 #        'views/appointment.xml',
         'wizard/close_service_wizard_view.xml',
         'wizard/booking_wizard_view.xml',
 #        'config/res_config_settings_views.xml',
-#        'views/calendar_event_views.xml',
+        'views/calendar_event_views.xml',
+        'views/menues.xml',
         'views/booking_request_view.xml',
         'views/booking_type_view.xml',
+        'views/resource_view.xml',
     ],
-#    'assets': {
+    'assets': {
 #        'web.assets_frontend': [
 #            'web_online_appointment_resource/static/src/css/appointment.css',
 #            'web_online_appointment_resource/static/src/js/appointment.js',
@@ -38,7 +38,10 @@
 #            'web_online_appointment_resource/static/lib/datetime/js/locales/bootstrap-datepicker.ca.js',
 #            'web_online_appointment_resource/static/src/js/select_multiple.js',
 #        ],
-#    },
+        'web.assets_backend': [
+            'portal_resource_booking/client_action/client_action.js',
+        ]
+    },
     'installable': True,
     'auto_install': False,
     'application': True,

@@ -1,0 +1,62 @@
+<odoo>
+	
+	<record model="ir.ui.view" id="calendar_form_activity_view">
+        <field name="name">calendar.form.activity.view</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+        	<field name="message_ids" position="after">
+				<field name="activity_ids" />
+			</field>
+			<field name="description" position="after">
+				<field name="additional_information" />
+				<field name="requests" />
+				<field name="special_request" />
+			</field>
+			<field name="categ_ids" position="after">
+				<field name="resource_occupancy" />
+			</field>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="booking_resource_calendar_tree_view" >
+		<field name="name">Booking resource calendar tree view</field>
+        <field name="model">calendar.event</field>
+		<field name="arch" type="xml">
+        	<tree>
+        		<field name="start" string="Booking hour"/>
+        		<field name="customer" />
+        		<field name="resource_occupancy" />
+        	</tree>
+        </field>
+	</record>
+	
+<!--
+	<record model="ir.ui.view" id="calendar_kanban_view">
+		<field name="name">Calendar kanbann view</field>
+		<field name="model">calendar.event</field>
+		<field name="arch" type="xml">
+			<kanban default_group_by="state" default_order="start asc" group_create="false" group_delete="false" group_edit="false"
+				quick_create="false" records_draggable="false>
+				<templates>
+					<t t-name="kanban-box">
+                    	<div t-attf-class="oe_kanban_global_click">
+                        	<div class="row">
+                                    <div class="col-6">
+                                        <strong><field name="name"/></strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <span class="badge badge-pill"><t t-esc="record.code.value"/></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong>Type: </strong><t t-esc="record.user_type_id.value"/>
+                                </div>
+                            </div>
+                	</t>
+				</templates>
+			</kanban>
+		</field>
+	</record>
+-->
+</odoo>
