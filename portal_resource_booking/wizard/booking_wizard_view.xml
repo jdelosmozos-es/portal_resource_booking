@@ -5,6 +5,7 @@
 		<field name="arch" type="xml">
 			<form>
 				<group cols="2">
+					<field name="today" />
 					<field name="date" options="{'datepicker': {'minDate': 'now'}}"/>
 					<field name="space_domain" invisible="1"/>
 					<field name="space" domain="space_domain" attrs="{'invisible': [('date','=',False)]}" />
@@ -12,6 +13,7 @@
 					<field name="slot_domain" invisible="1" />
 					<field name="slot" domain="slot_domain" widget="radio" attrs="{'invisible': [('num_persons','=',0)]}" />
 					<field name="partner" attrs="{'invisible': [('slot','=',False)]}" />
+					<field name="email" attrs="{'invisible': [('slot','=',False)]}" />
 					<field name="additional_info" attrs="{'invisible': [('additional_info','=',False)]}"/>
 					<field name="requests" widget="many2many_tags" attrs="{'invisible': [('partner','=',False)]}"/>
 					<field name="special_request" attrs="{'invisible': [('partner','=',False)]}"/>

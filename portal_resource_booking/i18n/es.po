@@ -317,7 +317,7 @@ msgstr "Hora inicial"
 #. module: portal_resource_booking
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__declined
 msgid "Declined"
-msgstr "Declinada"
+msgstr "Cancelada"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event_location__note
@@ -362,7 +362,7 @@ msgstr "Fecha final"
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__end_datetime
 msgid "End Datetime"
-msgstr "Fecha y hora final"
+msgstr "Hora final"
 
 #. module: portal_resource_booking
 #: code:addons/portal_resource_booking/models/booking.py:0
@@ -572,7 +572,7 @@ msgstr "Nombre"
 #. module: portal_resource_booking
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__needsaction
 msgid "Needs Action"
-msgstr ""
+msgstr "Pendiente"
 
 #. module: portal_resource_booking
 #: model:ir.ui.menu,name:portal_resource_booking.menu_new_booking

@@ -7,10 +7,17 @@ class BookingWizard(models.TransientModel):
     _description = 'Wizard to create bookings in the backend.'
     
     def _partner_domain(self):
-        management_user = self.env.ref('portal_resource_booking.appointment_manager_user')
-        system_user = self.env.ref('portal_resource_booking.appointment_system_user').sudo()
-        non_valid_partner_ids = [management_user.partner_id.id, system_user.partner_id.id]
-        return [('id', 'not in', non_valid_partner_ids)]
+        management_user = self.env.ref('portal_resource_booking.appointment_manager_user', raise_if_not_found=False)
+        system_user = self.env.ref('portal_resource_booking.appointment_system_user', raise_if_not_found=False).sudo()
+        if management_user and not system_user:
+            return [management_user.partner_id.id]
+        elif not management_user and system_user:
+            return [system_user.partner_id.id]
+        elif not management_user and not system_user:
+            return []
+        else:
+            non_valid_partner_ids = [management_user.partner_id.id, system_user.partner_id.id]
+            return [('id', 'not in', non_valid_partner_ids)]
         
     date = fields.Date(required=True)
     space = fields.Many2one(comodel_name='calendar.event.location',required=True)
@@ -22,6 +29,18 @@ class BookingWizard(models.TransientModel):
     additional_info = fields.Text(compute='_compute_additional_info')
     requests = fields.Many2many(comodel_name='booking.request')
     special_request = fields.Char()
+    email = fields.Char()
+    today = fields.Date(compute='_compute_today')
+    
+    @api.depends('slot')
+    def _compute_today(self):
+        for record in self:
+            record.today = fields.Date.today()
+    
+    @api.onchange('partner')
+    def _onchange_partner(self):
+        if self.partner and self.partner.email:
+            self.email = self.partner.email
     
     @api.depends('slot')
     def _compute_additional_info(self):
@@ -91,6 +110,9 @@ class BookingWizard(models.TransientModel):
                             'occupancy': new_occupancy,
                             'calendar_events': [(4,event.id,0)]
                         })
+        
+        if self.partner and not self.partner.email:
+            self.partner.write({'email': self.email})
         
         return {
 #            'type': 'ir.actions.close_wizard_refresh_view'

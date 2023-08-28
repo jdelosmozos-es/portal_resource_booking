@@ -34,7 +34,16 @@ class BookingResourceAgenda(models.Model):
     additional_info = fields.One2many(comodel_name='booking.additional.information', inverse_name='agenda')
     additional_info_is_for_all_times = fields.Boolean()
     type = fields.Many2one(comodel_name='booking.resource.agenda.type', required=True)
+    hide_slots = fields.Boolean(compute='_compute_hide_slots')
 
+    @api.depends('booking_slots')
+    def _compute_hide_slots(self):
+        for record in self:
+            if record.booking_slots:
+                record.hide_slots = False
+            else:
+                record.hide_slots = True
+            
     @api.depends('type','space')
     def _compute_display_name(self):
         for record in self:

@@ -51,14 +51,15 @@
                              		</tree>
                                 </field>
                             </group>
-                            <group>
-                                <field name='booking_slots' nolabel="1">
-                                    <tree string="Booking slots" editable="bottom" decoration-danger="is_open_online == False" decoration-muted="is_past == True">
+                            <group attrs="{'invisible': [('hide_slots','=',True)]}" string="Bookable hours">
+                            	<field name="hide_slots" invisible="1"/>
+                                <field name='booking_slots' nolabel="1" readonly="1">
+                                    <tree string="Booking slots" decoration-danger="is_open_online == False" decoration-muted="is_past == True">
                                         <field name='is_past' invisible='1' />
-                                        <field name='start_datetime'/>
-                                        <field name='end_datetime' />
-                                        <field name='capacity'/>
-                                        <field name='occupancy'/>
+                                        <field name='start_datetime' readonly="1"/>
+                                        <field name='end_datetime' readonly="1"/>
+                                        <field name='capacity' readonly="1"/>
+                                        <field name='occupancy' readonly="1"/>
                                         <field name='availability'/>
                                         <field name='is_open_online' />
                                     </tree>

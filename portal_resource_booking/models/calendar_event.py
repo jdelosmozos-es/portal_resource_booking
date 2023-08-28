@@ -37,6 +37,26 @@ class CalendarEvent(models.Model):
     time_dependant_status = fields.Boolean(compute='_compute_status')
     customer = fields.Many2one(comodel_name='res.partner',compute='_compute_customer')
     
+    @api.depends('allday', 'start', 'stop')
+    def _compute_dates(self):
+        """ Adapt the value of start_date(time)/stop_date(time)
+            according to start/stop fields and allday. Also, compute
+            the duration for not allday meeting ; otherwise the
+            duration is set to zero, since the meeting last all the day.
+        """
+        """ Modificado para que se calculen siempre las fechas en caso de reservas"""
+        for meeting in self:
+            if meeting.is_from_reservation_system:
+                meeting.start_date = meeting.start.date()
+                meeting.stop_date = meeting.stop.date()
+            else:
+                if meeting.allday and meeting.start and meeting.stop:
+                    meeting.start_date = meeting.start.date()
+                    meeting.stop_date = meeting.stop.date()
+                else:
+                    meeting.start_date = False
+                    meeting.stop_date = False
+                
     @api.depends('attendee_ids')
     def _compute_customer(self):
         for record in self:
@@ -68,28 +88,29 @@ class CalendarEvent(models.Model):
         else:
             return False
         
-    def _update_state(self, changer, status):       
+    def _update_state(self, changer, status):      
         if self._is_management(changer):
             if status == 'accepted':
                 if self.state == 'acc_from_cust':
-                    self.state = 'fully_accepted'
+                    self.write({'state': 'fully_accepted'})
                 else:
-                    self.state = 'acc_from_res_mgr'
+                    self.write({'state': 'acc_from_res_mgr'})
             elif status == 'tentative':
                 if self.state == 'fully_accepted':
-                    self.state = 'acc_from_cust'
+                    self.write({'state': 'acc_from_cust'})
                 elif self.state == 'acc_from_res_mgr':
-                    self.state = 'needsAction'
+                    self.write({'state': 'needsAction'})
         else:
             if status in ['declined', 'tentative']:
-                self.state = 'declined'
+                self.write({'state': 'declined'})
                 manager_att = self.attendee_ids.filtered(lambda x: x != changer)
                 manager_att.write({'state': 'needsAction'})
             else:
                 if self.state == 'acc_from_res_mgr':
-                    self.state = 'fully_accepted'
+                    self.write({'state': 'fully_accepted'})
                 else:
-                    self.state = 'acc_from_cust'
+                    self.write({'state': 'acc_from_cust'})
+        return True
     
     def create_activity(self, user, message):
         activity_type =  self.env.ref('mail.mail_activity_data_todo')
@@ -159,3 +180,9 @@ class CalendarEvent(models.Model):
                         line.occupancy = new_occupancy
             if 'start' in vals or 'stop' in vals:
                 raise UserError(_('Is not supported to modify the booking. You shoud cancel and create a new one instead.'))
+        return super(CalendarEvent, self).write(vals)
+    
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        return super(CalendarEvent, self.sudo()).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
+    
