@@ -212,6 +212,7 @@ class BookingResourceAgenda(models.Model):
                     existing_slot = Slot.search([('start_datetime', '=', slot_start), ('end_datetime', '=', slot_end), ('agenda', '=', agenda.id)])
                     if not existing_slot:
                         Slot.create(slot)
+                self.env['booking.resource.service'].create({'agenda': agenda.id, 'date': day.date()})
         return True                     
 
     @api.model

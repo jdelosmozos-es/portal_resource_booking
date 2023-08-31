@@ -27,7 +27,7 @@
         <field name="name">Agenda</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">calendar.event</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,form</field>
 <!--        <field name="view_id" ref="booking_resource_calendar_tree_view"/> -->
     </record>
     

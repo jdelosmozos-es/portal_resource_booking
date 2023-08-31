@@ -41,38 +41,74 @@
         <field name="name">Booking resource calendar kanban view</field>            
         <field name="model">calendar.event</field>            
         <field name="arch" type="xml">
-            <kanban class="o_booking_resource_kanban o_kanban_mobile" sample="1" style="background-color: rgb(1, 84, 71)">
+            <kanban default_group_by="state" class="o_booking_resource_kanban o_kanban_mobile" sample="1" style="background-color: rgb(1, 84, 71)">
                 <field name="id"/>
                 <field name="state"/>
                 <field name="slots"/> 
                 <field name="user_id"/>
+                <field name="customer"/>
+                <field name="start"/>
 				<progressbar field="state" colors='{"needsAction": "secondary", "declined": "danger", "acc_from_cust": "primary", "acc_from_res_mgr": "primary", "fully_accepted": "info", "customer_arrived": "success", "customer_not_shown": "warning" }'/>
                 <templates style="background-color: rgb(1, 84, 71)">
                     <t t-name="kanban-box" style="background-color: rgb(1, 84, 71)">
                         <div t-attf-class="oe_kanban_card oe_kanban_global_click" style="border-radius:14px;border-color :rgb(1, 84, 71);border-width: 4px;box-shadow: 0 0 0.5rem hsl(300, 40%, 5%);">  
                             <div class="o_kanban_record_top mb8">
-								<div class="o_kanban_record_headings ml-1">
-									<strong class="o_kanban_record_title"><span><field name="customer"/></span></strong>
-									<strong class="o_kanban_record_title"><span>- <field name="resource_occupancy"/> Persons</span></strong>
+								<div class="o_kanban_record_headings ml-1" style="font-size:18px">
+									<i class="fa fa-user"></i>
+									<strong t-esc="record.customer.value"></strong>
+									<strong>- <field name="resource_occupancy"/> Persons</strong>
 								</div>
 								<strong>
-									 <p class="mb-2"><i class="fa fa-spinner"></i><field name="state" widget="label_selection" options="{'classes': {'needsAction': 'secondary', 'declined': 'danger', 'acc_from_cust': 'primary', 'acc_from_res_mgr': 'primary', 'fully_accepted': 'info', 'customer_arrived': 'success', 'customer_not_shown': 'warning' }}"/></p>
+									 <p class="mb-2"><field name="state" style="font-size: 13px;" widget="label_selection" options="{'classes': {'needsAction': 'secondary', 'declined': 'danger', 'acc_from_cust': 'primary', 'acc_from_res_mgr': 'primary', 'fully_accepted': 'info', 'customer_arrived': 'success', 'customer_not_shown': 'warning' }}"/></p>
 								</strong>
 							</div>
-							<div class="o_kanban_record_bottom">
-								<div class="oe_kanban_bottom_left">
-                                    <field name="start"/>
+							<div class="o_kanban_record_bottom" style="border-bottom: 1px solid rgb(1, 84, 71,0.4); margin-top: 5px;">
+								<div class="oe_kanban_bottom_left" style="display: block; margin-left: 23px;">
+									<section style="margin-bottom: 5px;">
+										<i class="fa fa-calendar"></i>
+										<strong t-esc="record.start.value.split(' ')[0]"></strong>
+									</section>
+									<section style="margin-bottom: 5px;">
+										<i class="fa fa-clock-o"></i>
+                                    	<strong t-esc="record.start.value.split(' ')[1]"></strong>
+									</section>									
 								</div>
 
 								<div class="oe_kanban_bottom_right">
-									<field name="event_location_id"/> 
+									<i class="fa fa-table"></i>
+									<strong style="margin-left:5px;"> <field name="event_location_id"/></strong>
 								</div>
 							</div>
-                            <div class="oe_kanban_details">
-								<field name="special_request"/>
+                            <div class="oe_kanban_details" style="margin-top: 5px;border-bottom: 1px solid rgb(1, 84, 71,0.4);">
+								<div class="o_kanban_record_bottom">
+									<div class="oe_kanban_bottom_left" style="display: block;">
+										<section>
+											<i class="fa fa-tasks"></i>
+											<strong>Request</strong>
+										</section>
+										<section style="margin-bottom: 5px; margin-left: 20px;">
+											<field name="requests"/>
+										</section>
+									</div>
+	
+									<div class="oe_kanban_bottom_right" style="display: block;">
+										<section>
+											<strong>Special Requests</strong>
+										</section>
+										<section style="margin-bottom: 5px;">
+											<field name="special_request"/>
+										</section>
+									</div>
+								</div>
+                            </div>
+							<div class="oe_kanban_details" style="margin-top: 5px;">
+								<div class="o_kanban_record_bottom">
+									
+								</div>
                             </div>
                         </div>
                     </t>
+
                 </templates>
             </kanban>
         </field>
@@ -84,13 +120,22 @@
         <field name="arch" type="xml">
             <search>
                 <field name="customer"/>
-                <field name="start"/>
+                <field name="start"/> 
+                <field name="start_date" invisible="1"/>
                 <field name="event_location_id"/>
+                <filter name="today" string="Today" separator="1" domain="[('start_date','=',context_today().strftime('%Y-%m-%d'))]" />
+                <filter name="next_7_days" string="Next 7 days" separator="1" domain="[('start_date','&gt;=',context_today().strftime('%Y-%m-%d')),('start_date','&lt;',(context_today()+relativedelta(days=7)).strftime('%Y-%m-%d')),]" />
                 <filter string="Fully accepted" name="state" domain="[('state', '=', 'fully_accepted')]"/>
-                			
-				<searchpanel view_types="tree,kanban,search">
-					<field name="state" text="name" enable_counters="1" expand="1" limit="1000"/>
-					<field name="event_location_id"/>
+                <group expand="0" string="Group By">
+<!--					<filter string="Date" name="start_date_group" domain="[]" context="{'group_by':'start_date:day'}"/> -->
+<!--					<filter string="Space" name="space" domain="[]" context="{'group_by':'event_location_id'}"/> -->
+						<filter string="State" name="state_group" domain="[]" context="{'group_by':'state'}"/>
+				</group>		
+				<searchpanel view_types="kanban">
+<!--					<field name="state" text="name" enable_counters="1" expand="1" limit="1000"/> -->
+					<field name="event_location_id" text="name" enable_counters="1" expand="1" limit="1000"/>
+					<field name="service" text="name" limit="100" select="multi"
+						domain="[('date','&gt;=',context_today().strftime('%Y-%m-%d')),('date','&lt;',(context_today()+relativedelta(days=7)).strftime('%Y-%m-%d')),]"/>
 				</searchpanel>
             </search>
         </field>

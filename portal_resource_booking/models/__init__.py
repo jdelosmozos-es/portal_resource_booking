@@ -6,3 +6,4 @@ from . import helpers
 from . import booking_type
 from . import calendar_attendee
 from . import calendar_event
+from . import booking_service

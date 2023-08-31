@@ -8,7 +8,8 @@ class Attendee(models.Model):
     _inherit = 'calendar.attendee'
     
     def do_accept(self):
-        res = super(Attendee, self).do_accept()
+        res = self.write({'state': 'accepted'})
+#        res = super(Attendee, self).do_accept()
         if res:
             for attendee in self:
                 event = attendee.event_id
@@ -23,7 +24,8 @@ class Attendee(models.Model):
         return res
                 
     def do_tentative(self):
-        res = super(Attendee, self).do_tentative()
+#        res = super(Attendee, self).do_tentative()
+        res = self.write({'state': 'tentative'})
         if res:
             for attendee in self:
                 event = attendee.event_id
@@ -35,7 +37,8 @@ class Attendee(models.Model):
         return res
     
     def do_decline(self):
-        res = super(Attendee, self).do_decline()
+#        res = super(Attendee, self).do_decline()
+        res = self.write({'state': 'declined'})
         if res:
             for attendee in self:
                 event = attendee.event_id

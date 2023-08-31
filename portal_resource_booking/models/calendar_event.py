@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 class CalendarEvent(models.Model):
     _name = 'calendar.event'
     _inherit = ["mail.activity.mixin","calendar.event"]
+    _order = 'start'
     
     STATE_SELECTION = [
         ('needsAction', 'Needs Action'),
@@ -36,7 +37,32 @@ class CalendarEvent(models.Model):
     special_request = fields.Char()
     time_dependant_status = fields.Boolean(compute='_compute_status')
     customer = fields.Many2one(comodel_name='res.partner',compute='_compute_customer')
-    
+    agenda = fields.Many2one(comodel_name='booking.resource.agenda', compute='_compute_agenda')
+    service = fields.Many2one(comodel_name='booking.resource.service', compute='_compute_service', store=True)
+ 
+    @api.depends('agenda', 'start_date')
+    def _compute_service(self):
+        for record in self:
+            if record.is_from_reservation_system:
+                if record.start_date:
+                    services = self.env['booking.resource.service'].search([('agenda','=',record.agenda.id),('date','=',record.start_date)])
+                    if services:
+                        record.service = services[0]
+                    else:
+                        record.service = False
+                else:
+                    record.service = False
+            else:
+                record.service = False
+                
+    @api.depends('slots')
+    def _compute_agenda(self):
+        for record in self:
+            if record.is_from_reservation_system:
+                record.agenda = record.slots.mapped('agenda')
+            else:
+                record.agenda = False
+                
     @api.depends('allday', 'start', 'stop')
     def _compute_dates(self):
         """ Adapt the value of start_date(time)/stop_date(time)
