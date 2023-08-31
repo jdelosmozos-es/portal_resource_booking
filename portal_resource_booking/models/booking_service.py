@@ -10,6 +10,7 @@ class BookingService(models.Model):
     type = fields.Many2one(comodel_name='booking.resource.agenda.type', related='agenda.type')
     space = fields.Many2one(comodel_name='calendar.event.location', related='agenda.space')
     slots = fields.One2many(comodel_name='booking.resource.agenda.slot', compute='_compute_slots')
+    is_open_online = fields.Boolean(readonly=True)
     
     @api.depends('agenda','date')
     def _compute_slots(self):
@@ -21,5 +22,10 @@ class BookingService(models.Model):
         # DateTimeHelper = self.env['booking.datetime.helper']
         for record in self:
             # date = DateTimeHelper.get_user_datetime(record.start_datetime)
-            result.append((record.id, '%s - %s [%s]' % (record.date, record.type.name,record.space.name)))
+            result.append((record.id, '%s - %s [%s]' % (record.date.strftime('%d/%m/%Y'),record.type.name,record.space.name)))
         return result
+    
+    def close_online(self):
+        self.write({'is_open_online': False})
+        for slot in self.slots:
+            slot.write({'is_open_online': False})

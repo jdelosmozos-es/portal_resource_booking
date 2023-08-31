@@ -5,16 +5,16 @@
 			<field name="model">booking.close.service.wizard</field>
 			<field name="arch" type="xml">
 				<form>
-					<span attrs="{'invisible': ['|',('agendas_domain','=','[]'),('date','=',False)]}">Select the service to close.</span>
-					<span attrs="{'invisible': ['|',('agendas_domain','!=','[]'),('date','=',False)]}">There is no service open this date.</span>
+					<span attrs="{'invisible': ['|',('services_domain','=','[]'),('date','=',False)]}">Select the service to close.</span>
+					<span attrs="{'invisible': ['|',('services_domain','!=','[]'),('date','=',False)]}">There is no service open this date.</span>
 					<group>
 						<field name="name" invisible="1"/>
 						<field name="date" />
-						<field name="agendas_domain" invisible="1"/>
-						<field name="agendas" domain="agendas_domain" widget="many2many_checkboxes" attrs="{'invisible': ['|',('date','=',False),('agendas_domain','=','[]')]}"/>
+						<field name="services_domain" invisible="1"/>
+						<field name="services" domain="services_domain" widget="many2many_checkboxes" attrs="{'invisible': ['|',('date','=',False),('services_domain','=','[]')]}"/>
 					</group>
 					<footer>
-		        		<button type="object" class="oe_highlight" name="action_close_service" attrs="{'invisible': [('agendas_domain','=','[]')]}">
+		        		<button type="object" class="oe_highlight" name="action_close_service" attrs="{'invisible': [('services_domain','=','[]')]}">
 		        			Accept
 		        		</button>
 		        		<button string="Cancel"  special="cancel"/>

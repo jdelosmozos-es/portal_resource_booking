@@ -125,6 +125,7 @@
                 <field name="event_location_id"/>
                 <filter name="today" string="Today" separator="1" domain="[('start_date','=',context_today().strftime('%Y-%m-%d'))]" />
                 <filter name="next_7_days" string="Next 7 days" separator="1" domain="[('start_date','&gt;=',context_today().strftime('%Y-%m-%d')),('start_date','&lt;',(context_today()+relativedelta(days=7)).strftime('%Y-%m-%d')),]" />
+                <filter name="next" string="Next" separator="1" domain="[('start_date','&gt;=',context_today().strftime('%Y-%m-%d'))]" />
                 <filter string="Fully accepted" name="state" domain="[('state', '=', 'fully_accepted')]"/>
                 <group expand="0" string="Group By">
 <!--					<filter string="Date" name="start_date_group" domain="[]" context="{'group_by':'start_date:day'}"/> -->
@@ -135,7 +136,7 @@
 <!--					<field name="state" text="name" enable_counters="1" expand="1" limit="1000"/> -->
 					<field name="event_location_id" text="name" enable_counters="1" expand="1" limit="1000"/>
 					<field name="service" text="name" limit="100" select="multi"
-						domain="[('date','&gt;=',context_today().strftime('%Y-%m-%d')),('date','&lt;',(context_today()+relativedelta(days=7)).strftime('%Y-%m-%d')),]"/>
+						domain="[('date','&gt;=',context_today().strftime('%Y-%m-%d')),('date','&lt;',(context_today()+relativedelta(months=4)).strftime('%Y-%m-%d')),]"/>
 				</searchpanel>
             </search>
         </field>

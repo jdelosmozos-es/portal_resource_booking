@@ -7,23 +7,20 @@ class CloseServiceWizard(models.TransientModel):
     
     name = fields.Char()
     date = fields.Date()
-    agendas = fields.Many2many('booking.resource.agenda')
-    agendas_domain = fields.Char(compute='_compute_domain')
+    services = fields.Many2many('booking.resource.service')
+    services_domain = fields.Char(compute='_compute_domain')
     
     @api.depends('date')
     def _compute_domain(self):
         for record in self:
-            agendas = self.env['booking.resource.agenda'].search([
-                ('start_date','<=',record.date),('end_date','>=',record.date),
-            ]).filtered(lambda x: record.date in {y.date() for y in x.booking_slots.mapped('start_datetime')})
-            if agendas:
-                record.agendas_domain = json.dumps([('id','in',agendas.ids)])
+            services = self.env['booking.resource.service'].search([('date','=',record.date),('is_open_online','=',True)])
+#                ('start_date','<=',record.date),('end_date','>=',record.date),
+#            ]).filtered(lambda x: record.date in {y.date() for y in x.booking_slots.mapped('start_datetime')})
+            if services:
+                record.services_domain = json.dumps([('id','in',services.ids)])
             else:
-                record.agendas_domain = []
+                record.services_domain = []
 
     def action_close_service(self):
-        lines = self.env['booking.resource.agenda.slot'].search([
-                    ('agenda','in',self.agendas.ids),
-            ]).filtered(lambda x:  x.start_datetime.date() == self.date)
-        lines.is_open_online = False
+        self.service.close_online()
         return
