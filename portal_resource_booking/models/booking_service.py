@@ -12,6 +12,10 @@ class BookingService(models.Model):
     slots = fields.One2many(comodel_name='booking.resource.agenda.slot', compute='_compute_slots')
     is_open_online = fields.Boolean(readonly=True)
     
+    @api.model
+    def get_is_closed(self):
+        return True if not self.is_open_online else False
+        
     @api.depends('agenda','date')
     def _compute_slots(self):
         for record in self:

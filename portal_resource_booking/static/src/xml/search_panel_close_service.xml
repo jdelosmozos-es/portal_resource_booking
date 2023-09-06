@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="web.Legacy.SearchPanel.FiltersGroup" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('o_search_panel_label_title')]" position="after">
+            <section t-if="value.closed_service === true">
+                <span class="service_label_closed_t"/>
+                <span class="service_label_closed" >Closed</span>
+                <span class="service_label_closed_a"/>
+            </section>
+            <section t-if="value.closed_service === false">
+                <span class="service_label_open" >Open</span>
+                <span class="service_label_open_t"/>
+                <span class="service_label_open_a"/>
+            </section>
+        </xpath>
+    </t>
+</templates>

@@ -27,7 +27,10 @@
         'views/booking_type_view.xml',
         'views/resource_view.xml',
     ],
-#    'assets': {
+    'assets': {
+        'web-assets_qweb': [
+            'portal_resource_booking/static/src/xml/search_panel_close_service.xml'
+        ],
 #        'web.assets_frontend': [
 #            'web_online_appointment_resource/static/src/css/appointment.css',
 #            'web_online_appointment_resource/static/src/js/appointment.js',
@@ -38,10 +41,10 @@
 #            'web_online_appointment_resource/static/lib/datetime/js/locales/bootstrap-datepicker.ca.js',
 #            'web_online_appointment_resource/static/src/js/select_multiple.js',
 #        ],
-#        'web.assets_backend': [
-#            'portal_resource_booking/client_action/client_action.js',
-#        ]
-#    },
+        'web.assets_backend': [
+            'portal_resource_booking/static/src/scss/close_service_styles.scss',
+        ]
+    },
     'installable': True,
     'auto_install': False,
     'application': True,

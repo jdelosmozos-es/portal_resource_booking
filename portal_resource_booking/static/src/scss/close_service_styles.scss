@@ -1,0 +1,106 @@
+.service_label_open {
+    position: absolute;
+ 
+   top: -10px;
+    right: -18px;
+    width: 50px;
+    text-align: center;
+    border-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-right-radius: 0px;
+    background: rgb(40, 167, 69);
+    color: white;
+    z-index: 10;
+    box-shadow: 0 0 0.1rem hsl(300, 40%, 5%);
+}
+
+.service_label_open_t {
+    position: absolute;
+    top: 0;
+    right: -18px;
+    width: 3px;
+    height: 12px;
+    border-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-right-radius: 0px;
+    background: rgb(40, 167, 69);
+    color: white;
+    z-index: 11;
+}
+
+.service_label_open_a {
+    position: absolute;
+    top: 9px;
+    right: -18px;
+    width: 4px;
+    height: 5px;
+    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background: rgb(19, 80, 33);
+    color: white;
+    z-index: 12;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+  }
+
+  .service_label_closed {
+    position: absolute;
+    top: -10px;
+    right: -18px;
+    width: 50px;
+    text-align: center;
+    border-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-right-radius: 0px;
+    background: rgb(220, 53, 69);
+    color: white;
+    z-index: 10;
+    box-shadow: 0 0 0.1rem hsl(300, 40%, 5%);
+}
+
+.service_label_closed_t {
+    position: absolute;
+    top: 0;
+    right: -18px;
+    width: 3px;
+    height: 12px;
+    border-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-right-radius: 0px;
+    background: rgb(220, 53, 69);
+    color: white;
+    z-index: 11;
+}
+
+.service_label_closed_a {
+    position: absolute;
+    top: 9px;
+    right: -18px;
+    width: 4px;
+    height: 5px;
+    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background: rgb(106, 20, 20);
+    color: white;
+    z-index: 12;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+  }
+
+.o_search_panel {
+    overflow: revert;
+}
+header div label .o_search_panel_label_title{
+    text-align: center;
+    font-style: bold;
+    font-weight: bold;
+    background: cornsilk;
+}
+header div label .o_search_panel_label_title::after{
+    display: none !important;
+}
+header div label .o_search_panel_label_title::before{
+    display: none !important;
+}

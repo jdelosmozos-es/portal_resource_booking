@@ -68,7 +68,7 @@ class BookingResourceAgenda(models.Model):
             if record.additional_info_is_for_all_times:
                 if len(record.additional_info) > 1:
                     raise ValidationError("You cannot define more than one instruction for all times.")
-                if record.additional_info[0].hour != False:
+                if record.additional_info[0].time_float != False:
                     raise ValidationError("You cannot define hour if instruction is for all times.")
             else:
                 times_float = []
