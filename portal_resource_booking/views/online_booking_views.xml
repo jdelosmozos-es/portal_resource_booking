@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="appointment_calendar" name="Appointment Calendar">
+        <t t-call="website.layout">
+            <div class="container_online_appointment">
+                <h3>RESTAURANT BOOKING</h3>
+                <div class="container_appointment_display">
+
+                    <div class="container_appointment_info">
+                        <div class="container_appointment_instructions">
+                            <h3>IT IS VERY SYMPLE</h3>
+                            <ol>
+                                <li>
+                                    <span>
+                                 Pick a day and indicate the number of attendees.</span>
+                                </li>
+                                <li>
+                                    <span>
+                                        Choose the space where you want to eat.</span>
+                                </li>
+                                <li>
+                                    <span>
+                                    See what services are available for that day and click on the time you prefer to book </span>
+                                </li>
+                                <li>
+                                    <span>
+                                Fill out the form with your data.
+                                You will receive confirmation when the booking is made.
+                                    </span>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="container_appointment_title">
+                            <h3>RESERVE IN CARAVISTA</h3>
+                            <p>
+                            The reserved table will be held from the reserved time until 15 minutes later.
+                            From that moment on, it will be free for other customers.
+                            </p>
+                        </div>
+                        <div class="container_appointment_more_info">
+                            <h3>CONTACT US</h3>
+                            <p>
+                            If you have any kind of doubt or want to make any query, do not hesitate to contact us.
+                            </p>
+                            <p>If the appointment you want to book is for a date after 3 months, we recommend making the reservation by phone or email.</p>
+                        </div>
+                        <div class="container_appointment_letter" style="display: none;" id="ins_last">
+                            <h3>LAST STEP</h3>
+                            <p>
+                            All you have to do is fill out the next form with your data and requests.
+                            When you send it, you will receive a confirmation email.
+                            </p>
+                        </div>
+                        <div class="container_appointment_letter" style="display: none;" id="ins_contact">
+                            <h3>CONTACT US</h3>
+                            <p>
+                            If you have any kind of doubt or want to make any query, do not hesitate to contact us
+                            </p>
+                        </div>
+                        <div class="container_appointment_letter" style="display: none;" id="ins_img">
+                        </div>
+                    </div>
+                    <div class="container_appointment_calendar">
+                        <div class="state_line">
+                            <section id="step1">
+                                <span >1</span>
+                            </section>
+                            <section id="step2">
+                                <span>2</span>
+                            </section>
+                            <section id="step3">
+                                <span>3</span>
+                            </section>
+                            <section id="step4">
+                                <span>4</span>
+                            </section>
+                        </div>
+                        <div class="state_step">
+                            <span class="span-step">
+                                Day
+                            </span>
+                            <span class="span-step">
+                                Space
+                            </span>
+                            <span class="span-step">
+                                Time
+                            </span>
+                            <span class="span-step">
+                                Data
+                            </span>
+                        </div>
+                        <div class="date_time_set_customer_calendar" id="date_time_set_customer_calendar">
+                            <div style="display:none" t-foreach="available_dates" t-as="a_date">
+                                <span t-esc="a_date" class="available_dates"/>
+                            </div>
+                        </div>
+                        <form method="POST">
+                            <input type="hidden" name="max_capacity" t-att-value="max_capacity" />
+                            <input type="hidden" id="selectedDate" name="selectedDate" required="true"/>
+                            <input type="hidden" id="selectedTime" name="selectedTime" required="true"/>
+                            <!--                                <input type="hidden" name="calendar_id" id="calendar_id" t-att-value="calendar_id" />
+                        <input type="hidden" id="minutes_slot" name="minutes_slot" t-att-value="minutes_slot" /> -->
+                            <input type="hidden" id="csrf_token_f" name="csrf_token" t-att-value="request.csrf_token()" />
+                            <!-- <div class="col-md-10 col-sm-8 paddingR0">
+                                <h4 class="modal-title big marginT10">
+                                    <span id="book_table">You are booking on</span>
+                                    <strong><span id="selectedDate1" name="selectedDate1"> </span> </strong> 
+                                    <strong><span id="selectedTime1" name="selectedTime1"> </span></strong>
+                                </h4>
+                            </div> -->
+
+                            <div class="form-space-info" style="display: none" id="form-space-info">
+                                <div class="form-group" id="form-group-persons">
+                                    <label class="col-form-label" id="label_max_capacity" t-esc="max_capacity"/>
+                                    <input name="num_persons" id="num_persons_input" type="text" class="form-control" required="true" t-attf-placeholder="Max. #{max_capacity}"/>
+                                </div>
+                                <div class="form-group-title">
+                                    <h4>Where do you want to eat?</h4>
+                                </div>
+                                <div class="form-group-card">
+                                    <div class="card" t-foreach="spaces" t-as="space">
+                                        <div class="row no-gutters">
+                                            <div class="col-sm-5" style="background: #868e96;">
+                                                <img t-if="space.image_1920" class="card-img-top h-100" t-att-src="image_data_uri(space.image_1920)" />
+                                                <img t-else="" class="card-img-top h-100" src="/web_online_appointment_resource/static/src/img/not_set_image.png" />
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">
+                                                        <strong t-esc="space.name"></strong>
+                                                    </h5>
+                                                    <a class="btn btn-primary stretched-link select_space_appointment" id="select_space" t-att-name="space.id" t-attf-href="#" t-att-nodeValue="space.capacity" t-att-opt="space.name">
+                                                    Select
+                                                        <i class="fa fa-chevron-circle-right"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="spinner-border" id="spinner-border-f" style="display: none;margin: 45px; color: grey;" role="status">
+                                    <span class="visually-hidden"></span>
+                                </div>
+
+                                <div class="form-group" style="display: none" id="form-group-space">
+                                    <label class="col-form-label">Space:</label>
+                                    <select name="space_id" id="space_id">
+                                        <div t-foreach="spaces" t-as="space">
+                                            <option t-att-value="space.id">
+                                                <span t-esc="space.name"/>
+                                            </option>
+                                        </div>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="tag-styles time" id="time">
+                                <div class="container_lunch" style="display: none">
+                                    <h4>Lunch</h4>
+                                    <div class="tag-styles time time_lunch" id="time_lunch">
+                                    </div>
+                                </div>
+                                <div class="container_dinner" style="display: none">
+                                    <h4>Dinner</h4>
+                                    <div class="tag-styles time time_dinner" id="time_dinner">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="done_button_appointment" id="done_button" style="display: none">
+                                <a class="btn btn-primary">
+                            Done
+                                </a>
+                            </div>
+                        </form>
+
+                        <div id="wrap" class="wrapform">
+                            <div class="container oe_website_sale">
+                                <form class="form-horizontal">
+                                    <input type="hidden" name="start_datetime"/>
+                                    <input type="hidden" name="start"/>
+                                    <input type="hidden" name="space_id"/>
+                                    <input type="hidden" name="booking_time"/>
+                                    <input type="hidden" id="num_persons" name="num_persons"/>
+                                    <input type="hidden" name="csrf_token" />
+                                    <div class="form-group row">
+                                        <label class="col-form-label" id="appointment_date_info"/>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label" id="nameFinal_label">Name:</label>
+                                        <t t-if="user_name!=False">
+                                            <input name="name" id="nameFinal" type="text" class="form-control" t-attf-value="#{user_name}" readonly="True" />
+                                        </t>
+                                        <t t-else="">
+                                            <input name="name" id="nameFinal" type="text" class="form-control" required="True" />
+                                        </t>
+                                    </div>
+                                    <div class="form-group row" id="email">
+                                        <label class="col-form-label" id="emailFinal_label">Email:</label>
+                                        <t t-if="user_email!=False">
+                                            <input name="email" id="emailFinal" type="text" class="form-control" t-attf-value="#{user_email}" readonly="True" />
+                                        </t>
+                                        <t t-else="">
+                                            <input name="email" id="emailFinal" type="email" class="form-control" required="True" />
+                                        </t>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label" id="phoneFinal_label">Phone Number:</label>
+                                        <t t-if="user_phone!=False">
+                                            <input name="phone" id="phoneFinal" type="text" class="form-control" t-attf-value="#{user_phone}" readonly="True" />
+                                        </t>
+                                        <t t-else="">
+                                            <input name="phone" id="phoneFinal" type="text" class="form-control" required="True" />
+                                        </t>
+                                    </div>
+                                    <div class="form-group row" id="requests">
+                                        <label class="col-form-label">Requests:</label>
+                                        <select name="requests" id="appointment_requests_f" class="js-example-basic-multiple mb-1 new-get_data form-control" multiple="multiple">
+                                            <t t-foreach="requests" t-as="tag">
+                                                <option t-att-value="tag.id" t-esc="tag.name"/>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="form-group row" id="special_request">
+                                        <label class="col-form-label">Special request:</label>
+                                        <input name="special_request" id="appointment_special_requests_f" type="text" class="form-control" />
+                                    </div>
+                                    <div class="form-group row" id="instructions">
+                                        <label class="col-form-label">Instructions:</label>
+                                        <input name="instructions" id="instructions_f" type="text" class="form-control" readonly="true" />
+                                    </div>
+                                    <div class="form-group row" id="terms_conditions">
+                                        <label class="col-form-label" id="terms_conditions_label" >* Accept terms and conditions:</label>
+                                        <input name="terms_conditions" id="terms_conditions" type="checkbox" class="col-form-label" required="true"/>
+                                    </div>
+                                    <div class="form-group row">
+                                        <a class="btn btn-primary" id="appointment_done"> Confirm Booking</a>
+                                        <a href="/appointment" class="btn btn-secondary" id="appointment_cancel">Cancel</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="wrap">
+                <div class="container oe_website_sale pt16 py-2" id="wrap_thanks" style="display: none">
+                    <div class="alert alert-success" role="alert">
+                        <p>Thank You <strong id="stName"></strong></p>
+                        <p>Your appointment is booked for <strong id="stBooking"> in</strong></p>
+                    </div>
+                </div>
+            </div>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+
+
+</odoo>

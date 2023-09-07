@@ -1,0 +1,241 @@
+.container_online_appointment{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 5% 0 2% 0;    
+    background-image: linear-gradient(180deg,rgba(2,89,76,0.92) 0%,rgba(2,89,76,0.75) 100%),url(https://caravistarestaurant.com/wp-content/uploads/100_Caravista_280721-1-scaled.jpg) !important;
+    color:#fffef0;
+    width: 100%;
+}
+.containe_online_appointment h3{
+    text-align: center;
+}
+.container_appointment_display{
+    display: flex;
+    align-items: start;
+    justify-content: space-evenly;
+    flex-direction: row;
+    padding: 5%;
+    flex-wrap: wrap;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+    width: 100%;
+}
+.container_appointment_info{
+    width: 400px;
+    min-width: 240px;
+    border-radius: 15px;
+    box-shadow: 1px 1px 6px 1px rgba(237, 237, 237, 0.1);
+    padding: 1%;
+    color:#fffef0;
+    background: rgba(2, 89, 76, 0.56);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+    overflow: hidden;
+}
+.container_appointment_calendar{
+    padding: 2%;
+    border-radius: 15px;
+    box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1);
+    max-width: 700px !important;
+    background: #fffef0;
+    color: #262626;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-space-info{
+    margin: 5% auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+    overflow: hidden;
+}
+.form-group-card{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.time_lunch{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-wrap: wrap;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.time_dinner{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-wrap: wrap;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.datepicker table tr td.daydisabled:hover{
+    background: rgb(255, 214, 214);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.datepicker-days table{
+    margin:auto;
+    box-shadow: 1px 2px 6px 1px rgba(0, 0, 0, 0.1);
+    background: #f9f9f9;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.form-group-card{
+    display: flex;
+    align-items: start;
+    justify-content: space-evenly;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.form-group-card .card{
+    margin: 10px;
+    background: #f9f9f9;
+    box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+} 
+.tag-styles span{
+    color:#fffef0;
+    background: rgb(3, 118, 100);
+    box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.container_lunch h4{
+    margin: 10% 0 2% 0;
+    text-align: center;
+    color:rgb(1, 84, 71);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.container_dinner h4{
+    text-align: center;
+    margin: 2% 0;
+    color:rgb(1, 84, 71);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+#done_button .btn.btn-primary{
+    width: 100%;
+    margin: 5% 0;
+    background: rgb(3, 118, 100);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+#select_space{
+  background: rgb(3, 118, 100);
+  transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.appointment_confirm_close{
+    height: 0px;
+    display: none;
+}
+.appointment_confirm_open{
+    height: auto !important;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+    padding: 5%;
+}
+.wrapform{
+    border-radius: 15px;
+    box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1);
+    background: #f9f9f9;
+    color: #262626;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+    height: 0px;
+    overflow: hidden;
+}
+.container_appointment_info div h3,
+.container_appointment_info div p,
+.containe_online_appointment{
+    text-align: center;
+}
+.state_line{
+    height: 6px;
+    width: 80%;
+    background: #666666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 6% 0 ;
+    box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.state_line section{
+    height: 55px;
+    width: 55px;
+    border: solid 5px rgb(90, 90, 90);
+    border-radius: 50%;
+    color: rgb(90, 90, 90);
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.1);
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.state_line section span{
+    font-size: 36px;
+}
+.state_step{
+    width: 76%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1%;
+}
+.state_step span{
+    color: rgb(0, 136, 116);
+}
+.date_time_set_customer_calendar{
+    margin-top: 7%;
+}
+.step-done{
+    color: rgb(0, 136, 116) !important;
+    border-color: rgb(0, 136, 116) !important;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.step_focus{
+    height: 70px !important;
+    width: 70px !important;
+    color: rgb(197, 170, 0) !important;
+    border-color: rgb(197, 170, 0) !important;
+    transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;
+}
+.step_focus span{
+    font-size: 46px;
+}
+
+@media (max-width: 993px) {
+    .navbar-separator{
+        height: 1px
+    }
+    .nav-item-l{
+        padding: 1px 2px;
+    }
+    .state_line section{
+        height: 40px;
+        width: 40px;
+        border: solid 5px rgb(90, 90, 90);
+        border-radius: 50%;
+        color: rgb(90, 90, 90);
+        background: #f7f7f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .state_line section span{
+        font-size: 28px;
+    }
+    .step-done{
+        color: rgb(0, 136, 116) !important;
+        border-color: rgb(0, 136, 116) !important;
+    }
+    .step_focus{
+        height: 55px !important;
+        width: 55px !important;
+        color: rgb(197, 170, 0) !important;
+        border-color: rgb(197, 170, 0) !important;
+    }
+    .step_focus span{
+        font-size: 36px;
+    }
+    
+}

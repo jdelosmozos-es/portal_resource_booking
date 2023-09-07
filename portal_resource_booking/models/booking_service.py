@@ -10,7 +10,7 @@ class BookingService(models.Model):
     type = fields.Many2one(comodel_name='booking.resource.agenda.type', related='agenda.type')
     space = fields.Many2one(comodel_name='calendar.event.location', related='agenda.space')
     slots = fields.One2many(comodel_name='booking.resource.agenda.slot', compute='_compute_slots')
-    is_open_online = fields.Boolean(readonly=True)
+    is_open_online = fields.Boolean(readonly=True,default=True)
     
     @api.model
     def get_is_closed(self):
@@ -30,6 +30,8 @@ class BookingService(models.Model):
         return result
     
     def close_online(self):
-        self.write({'is_open_online': False})
-        for slot in self.slots:
-            slot.write({'is_open_online': False})
+        for record in self:
+            record.write({'is_open_online': False})
+            for slot in record.slots:
+                slot.write({'is_open_online': False})
+                

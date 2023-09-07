@@ -5,8 +5,12 @@
 			<field name="model">booking.close.service.wizard</field>
 			<field name="arch" type="xml">
 				<form>
-					<span attrs="{'invisible': ['|',('services_domain','=','[]'),('date','=',False)]}">Select the service to close.</span>
-					<span attrs="{'invisible': ['|',('services_domain','!=','[]'),('date','=',False)]}">There is no service open this date.</span>
+					<span attrs="{'invisible': ['|',('services_domain','=','[]'),('date','=',False)]}">
+						Select the services to close.
+					</span>
+					<span attrs="{'invisible': ['|',('services_domain','!=','[]'),('date','=',False)]}">
+						There is no service open this date.
+					</span>
 					<group>
 						<field name="name" invisible="1"/>
 						<field name="date" />

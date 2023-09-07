@@ -22,5 +22,9 @@ class CloseServiceWizard(models.TransientModel):
                 record.services_domain = []
 
     def action_close_service(self):
-        self.service.close_online()
-        return
+        self.services.close_online()
+        return {
+#            'type': 'ir.actions.close_wizard_refresh_view'
+            'type': 'ir.actions.client',
+            'tag': 'reload',  
+            }

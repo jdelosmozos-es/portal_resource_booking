@@ -2,6 +2,7 @@ from odoo import fields, models, api, _
 from datetime import timedelta, datetime
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.exceptions import UserError
+from babel.dates import format_date
 
 class CalendarEvent(models.Model):
     _name = 'calendar.event'
@@ -50,7 +51,7 @@ class CalendarEvent(models.Model):
                 record['closed_service'] = self.env['booking.resource.service'].browse(record['id']).get_is_closed()
                 record['display_name'] = record['display_name'].split(' - ')[1]
                 if 'group_name' in record:
-                    record['group_name'] = record['group_name'].strftime('%d %B')
+                    record['group_name'] = format_date(record['group_name'],locale=self.env.user.lang)
         return res
     
     @api.depends('slots')

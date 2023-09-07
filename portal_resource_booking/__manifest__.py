@@ -17,7 +17,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/agenda_views.xml',
-#        'views/appointment.xml',
+        'views/online_booking_views.xml',
         'wizard/close_service_wizard_view.xml',
         'wizard/booking_wizard_view.xml',
 #        'config/res_config_settings_views.xml',
@@ -28,19 +28,19 @@
         'views/resource_view.xml',
     ],
     'assets': {
-        'web-assets_qweb': [
+        'web.assets_qweb': [
             'portal_resource_booking/static/src/xml/search_panel_close_service.xml'
         ],
-#        'web.assets_frontend': [
-#            'web_online_appointment_resource/static/src/css/appointment.css',
-#            'web_online_appointment_resource/static/src/js/appointment.js',
+        'web.assets_frontend': [
+            'portal_resource_booking/static/src/scss/frontend_styles.scss',
+            'portal_resource_booking/static/src/js/booking_frontend_controller.js',
 #            'web/static/lib/fontawesome/css/font-awesome.css',
 #            'web_online_appointment_resource/static/lib/datetime/css/datepicker.css',
 #            'web_online_appointment_resource/static/lib/datetime/js/bootstrap-datepicker.js',
 #            'web_online_appointment_resource/static/lib/datetime/js/locales/bootstrap-datepicker.es.js',
 #            'web_online_appointment_resource/static/lib/datetime/js/locales/bootstrap-datepicker.ca.js',
 #            'web_online_appointment_resource/static/src/js/select_multiple.js',
-#        ],
+        ],
         'web.assets_backend': [
             'portal_resource_booking/static/src/scss/close_service_styles.scss',
         ]
