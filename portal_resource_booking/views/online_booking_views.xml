@@ -112,7 +112,7 @@
                             <div class="form-space-info" style="display: none" id="form-space-info">
                                 <div class="form-group" id="form-group-persons">
                                     <label class="col-form-label" id="label_max_capacity" t-esc="max_capacity"/>
-                                    <input name="num_persons" id="num_persons_input" type="text" class="form-control" required="true" t-attf-placeholder="Max. #{max_capacity}"/>
+                                    <input name="num_persons" id="num_persons_input" type="text" class="form-control" required="true"/> <!-- t-attf-placeholder="Max. #{max_capacity}"/> -->
                                 </div>
                                 <div class="form-group-title">
                                     <h4>Where do you want to eat?</h4>

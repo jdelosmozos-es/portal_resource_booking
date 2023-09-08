@@ -3,8 +3,9 @@ odoo.define('web_appointment_by_location.appointment', function (require) {
 
     // var Model = require('web.Model');
     var ajax = require('web.ajax');
-    $(document).ready(function () {
-        
+    var time = require('web.time');
+ //   $(document).ready(function () {
+	start: function () {
         $(".container_appointment_instructions").show();
         $(".container_appointment_title").show();
         $(".container_appointment_more_info").show();
@@ -15,7 +16,7 @@ odoo.define('web_appointment_by_location.appointment', function (require) {
         $(".container_lunch").hide();
         $(".container_dinner").hide();
         if(document.getElementById("label_max_capacity")){
-            $("#label_max_capacity").html("Number of persons (Max. " + (document.getElementById("label_max_capacity").innerText ? document.getElementById("label_max_capacity").innerText : 0) + "):");
+            $("#label_max_capacity").html("Number of persons") // (Max. " + (document.getElementById("label_max_capacity").innerText ? document.getElementById("label_max_capacity").innerText : 0) + "):");
         }
         $("#step1").addClass("step_focus");
         $("#step2").removeClass("step-done");
@@ -28,27 +29,48 @@ odoo.define('web_appointment_by_location.appointment', function (require) {
         var available_dates = $('.available_dates');
         var a_dates = []
         for (var span = 0; span < available_dates.length; span++) {
-            a_dates.push(available_dates[span]['innerText'])
+            a_dates.push(JSON.parse(available_dates[span]['innerText'])) //.split('/').map(Number))
         }
-        var lang = this.lastChild.lang.split('-')[0];
+        var lang = document.querySelector("html").getAttribute("lang");// this.lastChild.lang.split('-')[0];
         $('.date_time_set_customer_calendar').datepicker({
-            minDate: moment().calendar(),
-            lenguage: lang,
-            startView: 0,
-            weekStart: 1,
-            dateFormat: 'yy-mm-dd',
-            icon: {
+//            minDate: moment().calendar(),
+			locale: 'es',
+//            startView: 0,
+//            weekStart: 1,
+//            dateFormat: 'yy-mm-dd',
+//            format: time.getLangDatetimeFormat(),
+            icons: {
                 next: 'glyphicon glyphicon-chevron-right',
                 previous: 'glyphicon glyphicon-chevron-left'
             },
-            availableDates: a_dates
-        })
-            .on('changeDate', function (e) {
+//            availableDates: a_dates,
+//        })
+//            .on('Select', function (e) {
+			beforeShowDay: function(date) {
+				var day = date.getDate();
+				var month = date.getMonth()+1;
+				var year = date.getFullYear();
+				let i = 0;
+				let selectable = false;
+				while (i<a_dates.length) {
+					if (day == a_dates[i].day && month == a_dates[i].month && year == a_dates[i].year) {
+						selectable = true;
+						break
+					}
+					i++
+				}
+				return [selectable,""]
+			},
+			onSelect: function(e) {
                 var dataFlag = false;
-                var date = $(this).datepicker('getDate');
-                var day = e.date.getDate();
-                var month = e.date.getMonth() + 1;
-                var year = e.date.getFullYear();
+//                var date = $(this).datepicker('getDate');
+				self = jQuery.datepicker._getInst($('#date_time_set_customer_calendar')[0])
+//                var day = e.date.getDate();
+				var day = self.selectedDay
+//                var month = e.date.getMonth() + 1;
+				var month = self.selectedMonth +1
+//                var year = e.date.getFullYear();
+				var year = self.selectedYear
                 var selectedDate = day + '-' + month + '-' + year;
                 var space_id = 0;
                 var spaceName = "";
@@ -76,8 +98,8 @@ odoo.define('web_appointment_by_location.appointment', function (require) {
                     $("#step3").addClass("step_focus");
                     $("#step4").removeClass("step-done");
                     $("#done_button").hide();
-                    $(".container_lunch").hide();
-                    $(".container_dinner").hide();
+                    $(".container_lunch").hide(); //FIXME: estos deben ser types
+                    $(".container_dinner").hide(); //FIXME: estos deben ser types
                     document.getElementById("space_id").value = this.attributes.name.value
                     spaceName = this.attributes.opt.value
                     var cards = $(".card-body");
@@ -90,8 +112,8 @@ odoo.define('web_appointment_by_location.appointment', function (require) {
                     var numPersons = this.attributes.nodevalue.value; 
                     var num = document.getElementById("num_persons_input").value | 0;
                     var nPersons = num > 0 ? num : false;
-                    $("#label_max_capacity").html("Number of persons (Max. " + numPersons + "):");
-                    document.getElementById("num_persons_input").placeholder = "Max. " + numPersons;
+                    $("#label_max_capacity").html("Number of persons"); // (Max. " + numPersons + "):");
+                    //document.getElementById("num_persons_input").placeholder = "Max. " + numPersons;
                     $("#form-group-persons").show();
                     if (nPersons > numPersons || nPersons === false) {
                         document.getElementById("label_max_capacity").setAttribute("style", "color: #cb2e2e; transition: all cubic-bezier(0.075, 0.82, 0.165, 1) ease-in-out;");
@@ -108,7 +130,7 @@ odoo.define('web_appointment_by_location.appointment', function (require) {
                             var HTML = '';
                             var HTML2 = '';
                             for (var i in event_list['slots']) {
-                                if (event_list['slots'][i] < "18:00") {
+                                if (event_list['slots'][i] < "18:00") { //FIXME: Usar el type
                                     HTML += '<span class="js-time-slot" id="js_slot">' + event_list['slots'][i] + '</span>';
                                 } else {
                                     HTML2 += '<span class="js-time-slot" id="js_slot">' + event_list['slots'][i] + '</span>';
@@ -240,7 +262,7 @@ odoo.define('web_appointment_by_location.appointment', function (require) {
                         selectedDate = '';
                     }
                 })
-
+			}
             });
     });
 

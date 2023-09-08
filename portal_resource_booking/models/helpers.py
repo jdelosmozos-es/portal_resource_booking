@@ -42,7 +42,8 @@ class DateTimeHelper(models.AbstractModel):
         else:
             return False
         
-#    @api.model
-#    def _get_hour(self, time):
-#        vals = time.split(':')
-#        return int(vals[0])+int(vals[1])/60
+    @api.model
+    def get_time_string_from_float(self, float_time):
+        hours, minutes = divmod(float_time, 60)
+        return '%i:%i' % (hours,minutes)
+    
