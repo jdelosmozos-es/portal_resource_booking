@@ -82,7 +82,7 @@ class BookingWizard(models.TransientModel):
             stop_datetime = start_datetime + timedelta(minutes=int(agenda.event_duration_minutes))
         else:
             stop_datetime = agenda.get_last_time_in_date(start_datetime.date())
-        management_user = self.env.ref('portal_resource_booking.appointment_manager_user').sudo()
+        management_user = self.env.ref('portal_resource_booking.appointment_manager_user', raise_if_not_found=False).sudo()
         domain = [('agenda', '=', agenda.id), ('start_datetime', '>=', start_datetime), ('start_datetime', '<=', stop_datetime)]
         slots = self.env['booking.resource.agenda.slot'].sudo().search(domain)
         event_vals = {
@@ -102,7 +102,7 @@ class BookingWizard(models.TransientModel):
             'requests': self.requests,
             'special_request': self.special_request,
         }
-        user = self.env.ref('portal_resource_booking.appointment_system_user').sudo()
+        user = self.env.ref('portal_resource_booking.appointment_system_user', raise_if_not_found=False).sudo()
         event = self.env['calendar.event'].sudo().with_user(user).create(event_vals)
         for slot in slots:
             new_occupancy = slot.occupancy + self.num_persons

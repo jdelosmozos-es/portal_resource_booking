@@ -40,50 +40,77 @@
         	</tree>
         </field>
 	</record>
-	
+
 	<record id="booking_resource_calendar_kanban_view" model="ir.ui.view">
-        <field name="name">Booking resource calendar kanban view</field>            
-        <field name="model">calendar.event</field>            
-        <field name="arch" type="xml">
-            <kanban default_group_by="state" class="o_booking_resource_kanban o_kanban_mobile" sample="1" style="background-color: rgb(1, 84, 71)">
-                <field name="id"/>
-                <field name="state"/>
-                <field name="slots"/> 
-                <field name="user_id"/>
-                <field name="customer"/>
-                <field name="start"/>
+		<field name="name">Booking resource calendar kanban view</field>
+
+		<field name="model">calendar.event</field>
+		<field name="arch" type="xml">
+			<kanban default_group_by="state" class="o_booking_resource_kanban o_kanban_mobile crnd-refresh-every-15s" sample="1" style="background-color: rgb(1, 84, 71)">
+				<field name="id"/>
+				<field name="state"/>
+				<field name="slots"/>
+				<field name="user_id"/>
+				<field name="customer"/>
+				<field name="start"/>
+				<field name="allow_customer_shown"/>
 				<progressbar field="state" colors='{"needsAction": "secondary", "declined": "danger", "acc_from_cust": "primary", "acc_from_res_mgr": "primary", "fully_accepted": "info", "customer_arrived": "success", "customer_not_shown": "warning" }'/>
-                <templates style="background-color: rgb(1, 84, 71)">
-                    <t t-name="kanban-box" style="background-color: rgb(1, 84, 71)">
-                        <div t-attf-class="oe_kanban_card oe_kanban_global_click" style="border-radius:14px;border-color :rgb(1, 84, 71);border-width: 4px;box-shadow: 0 0 0.5rem hsl(300, 40%, 5%);">  
-                            <div class="o_kanban_record_top mb8">
+				<templates>
+					<t t-name="kanban-box">
+						<div t-attf-class="oe_kanban_card" style="border-radius:14px;box-shadow: 0 0 0.5rem hsl(300, 40%, 5%);margin-top:10px;">
+							<div class="o_dropdown_kanban dropdown" tabindex="-1">
+								<a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#" role="button" aria-label="Dropdown menu" title="Dropdown menu">
+									<span class="fa fa-ellipsis-v"/>
+								</a>
+								<div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+									<a type="open" class="dropdown-item">More info</a>
+									<a type="edit" class="dropdown-item">Edit</a>
+								</div>
+							</div>
+							<div class="o_kanban_record_top mb8">
 								<div class="o_kanban_record_headings ml-1" style="font-size:18px">
 									<i class="fa fa-user"></i>
 									<strong t-esc="record.customer.value"></strong>
-									<strong>- <field name="resource_occupancy"/> Persons</strong>
+									<strong> - <field name="resource_occupancy"/> Persons</strong>
 								</div>
 								<strong>
-									 <p class="mb-2"><field name="state" style="font-size: 13px;" widget="label_selection" options="{'classes': {'needsAction': 'secondary', 'declined': 'danger', 'acc_from_cust': 'primary', 'acc_from_res_mgr': 'primary', 'fully_accepted': 'info', 'customer_arrived': 'success', 'customer_not_shown': 'warning' }}"/></p>
+									<p class="mb-2" style="font-size: 13px;margin-right: 10px">
+										<field name="state" widget="label_selection" options="{'classes': {'0needsAction': 'secondary', '1declined': 'danger', '2acc_from_cust': 'primary', '3acc_from_res_mgr': 'primary', '4fully_accepted': 'info', '5customer_arrived': 'success', '6customer_not_shown': 'warning' }}"/>
+									</p>
 								</strong>
 							</div>
 							<div class="o_kanban_record_bottom" style="border-bottom: 1px solid rgb(1, 84, 71,0.4); margin-top: 5px;">
-								<div class="oe_kanban_bottom_left" style="display: block; margin-left: 23px;">
+								<div class="oe_kanban_bottom_left" style="margin-left: 23px;">
+									<strong>
+										<field name="customer_phone"/>
+									</strong>
+								</div>
+								<div class="oe_kanban_bottom_right" style="display: block; margin-left: 23px;">
+									<strong>
+										<field name="customer_email"/>
+									</strong>
+								</div>
+							</div>
+							<div class="o_kanban_record_bottom" style="border-bottom: 1px solid rgb(1, 84, 71,0.4); margin-top: 5px;">
+								<div class="oe_kanban_bottom_left" style="margin-left: 23px;">
+									<i class="fa fa-table"></i>
+									<strong>
+										<field name="event_location_id"/>
+									</strong>
+								</div>
+
+								<div class="oe_kanban_bottom_right" style="display: block; margin-left: 23px;">
 									<section style="margin-bottom: 5px;">
 										<i class="fa fa-calendar"></i>
 										<strong t-esc="record.start.value.split(' ')[0]"></strong>
 									</section>
 									<section style="margin-bottom: 5px;">
 										<i class="fa fa-clock-o"></i>
-                                    	<strong t-esc="record.start.value.split(' ')[1]"></strong>
-									</section>									
-								</div>
-
-								<div class="oe_kanban_bottom_right">
-									<i class="fa fa-table"></i>
-									<strong style="margin-left:5px;"> <field name="event_location_id"/></strong>
+										<strong t-esc="record.start.value.split(' ')[1]"></strong>
+									</section>
 								</div>
 							</div>
-                            <div class="oe_kanban_details" style="margin-top: 5px;border-bottom: 1px solid rgb(1, 84, 71,0.4);">
+							<div class="oe_kanban_details" style="margin-top: 5px;">
 								<div class="o_kanban_record_bottom">
 									<div class="oe_kanban_bottom_left" style="display: block;">
 										<section>
@@ -94,9 +121,10 @@
 											<field name="requests"/>
 										</section>
 									</div>
-	
+
 									<div class="oe_kanban_bottom_right" style="display: block;">
 										<section>
+											<i class="fa fa-exclamation-triangle"></i>
 											<strong>Special Requests</strong>
 										</section>
 										<section style="margin-bottom: 5px;">
@@ -104,20 +132,28 @@
 										</section>
 									</div>
 								</div>
-                            </div>
-							<div class="oe_kanban_details" style="margin-top: 5px;">
+							</div>
+							<div class="oe_kanban_details" style="margin-top: 5px;border-top: 1px solid rgb(1, 84, 71,0.4);" >
 								<div class="o_kanban_record_bottom">
-									
-								</div>
-                            </div>
-                        </div>
-                    </t>
-
-                </templates>
-            </kanban>
-        </field>
-    </record>
-	
+									<button class="btn btn-primary btn-primary-sm" style="margin: 3px;" string="Customer shown" name="action_customer_shown" type="object"
+										attrs="{'invisible': ['|',('state', 'in', ['1declined','6customer_present_confirmed','7customer_not_shown']),('allow_customer_shown','!=',True)]}">
+										Shown
+									</button>
+									<button class="btn btn-secondary btn-secondary-sm" style="margin: 3px;" string="Customer not shown" name="action_customer_not_shown" type="object" attrs="{'invisible': [('state', '!=', '5customer_present_auto')]}">
+										Not shown
+									</button>
+									<button class="btn btn-primary btn-secondary-sm" style="margin: 3px;" string="Confirm booking by restaurant" name="action_booking_confirm" type="object" attrs="{'invisible': [('state', 'in', ['1declined','3acc_from_res_mgr','4fully_accepted','5customer_present_auto','6customer_present_confirmed','7customer_not_shown'])]}">
+										Confirm
+									</button>
+								</div>													
+							</div>
+						</div>
+					</t>
+				</templates>
+			</kanban>
+		</field>
+	</record>
+			
 	<record id="appointment_resource_search" model="ir.ui.view">
         <field name="name">appointment_resource_search</field>
         <field name="model">calendar.event</field>
@@ -130,7 +166,7 @@
                 <filter name="today" string="Today" separator="1" domain="[('start_date','=',context_today().strftime('%Y-%m-%d'))]" />
                 <filter name="next_7_days" string="Next 7 days" separator="1" domain="[('start_date','&gt;=',context_today().strftime('%Y-%m-%d')),('start_date','&lt;',(context_today()+relativedelta(days=7)).strftime('%Y-%m-%d')),]" />
                 <filter name="next" string="Next" separator="1" domain="[('start_date','&gt;=',context_today().strftime('%Y-%m-%d'))]" />
-                <filter string="Fully accepted" name="state" domain="[('state', '=', 'fully_accepted')]"/>
+                <filter string="Fully accepted" name="state" domain="[('state', '=', '4fully_accepted')]"/>
                 <group expand="0" string="Group By">
 <!--					<filter string="Date" name="start_date_group" domain="[]" context="{'group_by':'start_date:day'}"/> -->
 <!--					<filter string="Space" name="space" domain="[]" context="{'group_by':'event_location_id'}"/> -->

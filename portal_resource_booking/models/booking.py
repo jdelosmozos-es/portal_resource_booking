@@ -12,7 +12,7 @@ class BookingResourceAgenda(models.Model):
 
     name = fields.Char(required=True)
     display_name = fields.Char(compute='_compute_display_name')
-    space = fields.Many2one(comodel_name='calendar.event.location', required=True)
+    space = fields.Many2one(comodel_name='calendar.event.location', required=True, ondelete='restrict')
     capacity = fields.Integer(related='space.capacity')
     dayoff_start = fields.Float("Day-off start")
     dayoff_end = fields.Float("Day-off end")
@@ -257,6 +257,7 @@ class BookingResourceAgenda(models.Model):
 class BookingResourceAgendaSlot(models.Model):
     _name = 'booking.resource.agenda.slot'
     _description = 'Every time slot from an agenda that is bookable.'
+    _order = 'start_datetime'
 
     agenda = fields.Many2one('booking.resource.agenda', string='Booking agenda', ondelete='cascade',required=True)
     space = fields.Many2one(related='agenda.space',store=True)

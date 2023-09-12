@@ -14,6 +14,7 @@
     'depends': ['website', 'contacts', 'calendar_resource_location_mac5'],
     'data': [
         'data/booking_data.xml',
+        'data/booking_crons.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/agenda_views.xml',
@@ -29,7 +30,8 @@
     ],
     'assets': {
         'web.assets_qweb': [
-            'portal_resource_booking/static/src/xml/search_panel_close_service.xml'
+            'portal_resource_booking/static/src/xml/search_panel_close_service.xml',
+            'portal_resource_booking/static/src/xml/bell_template.xml',
         ],
         'web.assets_frontend': [
             'portal_resource_booking/static/src/scss/frontend_styles.scss',
@@ -39,10 +41,11 @@
 #            'web_online_appointment_resource/static/lib/datetime/js/bootstrap-datepicker.js',
 #            'web_online_appointment_resource/static/lib/datetime/js/locales/bootstrap-datepicker.es.js',
 #            'web_online_appointment_resource/static/lib/datetime/js/locales/bootstrap-datepicker.ca.js',
-#            'web_online_appointment_resource/static/src/js/select_multiple.js',
+            'portal_resource_booking/static/src/js/select_multiple.js',
         ],
         'web.assets_backend': [
             'portal_resource_booking/static/src/scss/close_service_styles.scss',
+            'portal_resource_booking/static/src/js/backend/datepicker_today_patch.js',
         ]
     },
     'installable': True,

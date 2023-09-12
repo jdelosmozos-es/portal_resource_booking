@@ -6,14 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-06 17:00+0000\n"
-"PO-Revision-Date: 2023-09-06 17:00+0000\n"
+"POT-Creation-Date: 2023-09-09 12:24+0000\n"
+"PO-Revision-Date: 2023-09-09 12:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "* Accept terms and conditions:"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
+msgid ""
+"<i class=\"fa fa-exclamation-triangle\"/>\n"
+"\t\t\t\t\t\t\t\t\t\t\t<strong>Special Requests</strong>"
+msgstr ""
 
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
@@ -34,8 +46,70 @@ msgid ""
 msgstr ""
 
 #. module: portal_resource_booking
-#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
-msgid "<strong>Special Requests</strong>"
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"<span class=\"span-step\">\n"
+"                                Day\n"
+"                            </span>\n"
+"                            <span class=\"span-step\">\n"
+"                                Space\n"
+"                            </span>\n"
+"                            <span class=\"span-step\">\n"
+"                                Time\n"
+"                            </span>\n"
+"                            <span class=\"span-step\">\n"
+"                                Data\n"
+"                            </span>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"<span>\n"
+"                                        Choose the space where you want to eat.</span>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"<span>\n"
+"                                    See what services are available for that day and click on the time you prefer to book </span>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"<span>\n"
+"                                 Pick a day and indicate the number of attendees.</span>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"<span>\n"
+"                                Fill out the form with your data.\n"
+"                                You will receive confirmation when the booking is made.\n"
+"                                    </span>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "<span>1</span>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "<span>2</span>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "<span>3</span>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "<span>4</span>"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -45,12 +119,12 @@ msgid "Accept"
 msgstr ""
 
 #. module: portal_resource_booking
-#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__acc_from_cust
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__2acc_from_cust
 msgid "Accepted from customer"
 msgstr ""
 
 #. module: portal_resource_booking
-#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__acc_from_res_mgr
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__3acc_from_res_mgr
 msgid "Accepted from reservations manager"
 msgstr ""
 
@@ -123,6 +197,13 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_resource_agenda
 msgid "Agenda of resource bookings. Define possible time slots to book."
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"All you have to do is fill out the next form with your data and requests.\n"
+"                            When you send it, you will receive a confirmation email."
 msgstr ""
 
 #. module: portal_resource_booking
@@ -217,6 +298,11 @@ msgid "Bookings"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "CONTACT US"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_calendar_attendee
 msgid "Calendar Attendee Information"
 msgstr ""
@@ -232,6 +318,7 @@ msgid "Calendar Events"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.close_service_form_view
 msgid "Cancel"
@@ -265,6 +352,16 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.ui.menu,name:portal_resource_booking.menu_booking_resource_configuration
 msgid "Configuration"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
+msgid "Confirm"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Confirm Booking"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -306,7 +403,7 @@ msgid "Customer"
 msgstr ""
 
 #. module: portal_resource_booking
-#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__customer_arrived
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__5customer_arrived
 msgid "Customer arrived"
 msgstr ""
 
@@ -324,7 +421,8 @@ msgid "Customer has confirmed the booking."
 msgstr ""
 
 #. module: portal_resource_booking
-#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__customer_not_shown
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__6customer_not_shown
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
 msgid "Customer not shown"
 msgstr ""
 
@@ -356,7 +454,7 @@ msgid "Day-off start"
 msgstr ""
 
 #. module: portal_resource_booking
-#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__declined
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__1declined
 msgid "Declined"
 msgstr ""
 
@@ -377,6 +475,11 @@ msgid "Description of the space."
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Dinner"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__display_name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__display_name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_holiday__display_name
@@ -391,13 +494,33 @@ msgid "Display Name"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Done"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
+msgid "Dropdown menu"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__duration
 msgid "Duration in days"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
+msgid "Edit"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__email
 msgid "Email"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Email:"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -459,7 +582,7 @@ msgid "Friday"
 msgstr ""
 
 #. module: portal_resource_booking
-#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__fully_accepted
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__4fully_accepted
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_resource_search
 msgid "Fully accepted"
 msgstr ""
@@ -500,6 +623,11 @@ msgid "ID"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "IT IS VERY SYMPLE"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_exception_icon
 msgid "Icon"
 msgstr ""
@@ -512,6 +640,27 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.model.fields,help:portal_resource_booking.field_booking_resource_agenda__event_duration
 msgid "If not set the duration is all available"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"If the appointment you want to book is for a date after 3 months, we "
+"recommend making the reservation by phone or email."
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"If you have any kind of doubt or want to make any query, do not hesitate to "
+"contact us"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"If you have any kind of doubt or want to make any query, do not hesitate to "
+"contact us."
 msgstr ""
 
 #. module: portal_resource_booking
@@ -541,6 +690,11 @@ msgid "Image 512"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Instructions:"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__is_from_reservation_system
 msgid "Is From Reservation System"
 msgstr ""
@@ -556,6 +710,11 @@ msgstr ""
 msgid ""
 "Is not supported to modify the booking. You shoud cancel and create a new "
 "one instead."
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "LAST STEP"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -606,6 +765,11 @@ msgid "Last bookable hour"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Lunch"
+msgstr ""
+
+#. module: portal_resource_booking
 #: code:addons/portal_resource_booking/wizard/booking_wizard.py:0
 #, python-format
 msgid "Manual booking by user internal"
@@ -619,6 +783,11 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__0
 msgid "Monday"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
+msgid "More info"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -636,7 +805,12 @@ msgid "Name"
 msgstr ""
 
 #. module: portal_resource_booking
-#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__needsaction
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Name:"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model.fields.selection,name:portal_resource_booking.selection__calendar_event__state__0needsaction
 msgid "Needs Action"
 msgstr ""
 
@@ -685,6 +859,11 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_type_id
 msgid "Next Activity Type"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
+msgid "Not show"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -742,8 +921,23 @@ msgid "Persons"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Phone Number:"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_request
 msgid "Proposed requests from the customer to be shown on bookings."
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "RESERVE IN CARAVISTA"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "RESTAURANT BOOKING"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -760,6 +954,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__requests
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__requests
 msgid "Requests"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Requests:"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -784,6 +983,13 @@ msgid "Saturday"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"Select\n"
+"                                                        <i class=\"fa fa-chevron-circle-right\"/>"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_type__sequence
 msgid "Sequence"
 msgstr ""
@@ -801,6 +1007,11 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__services_domain
 msgid "Services Domain"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
+msgid "Show"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -839,6 +1050,11 @@ msgid "Space Domain"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Space:"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.actions.act_window,name:portal_resource_booking.space_resource_action
 #: model:ir.ui.menu,name:portal_resource_booking.appoint_space_menu
 msgid "Spaces"
@@ -848,6 +1064,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__special_request
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__special_request
 msgid "Special Request"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Special request:"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -888,6 +1109,18 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__text
 msgid "Text"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Thank You <strong id=\"stName\"/>"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid ""
+"The reserved table will be held from the reserved time until 15 minutes later.\n"
+"                            From that moment on, it will be free for other customers."
 msgstr ""
 
 #. module: portal_resource_booking
@@ -965,6 +1198,11 @@ msgid "Weekoff Days"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Where do you want to eat?"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_close_service_wizard
 msgid "Wizard to close services."
 msgstr ""
@@ -990,4 +1228,9 @@ msgstr ""
 #: code:addons/portal_resource_booking/models/booking.py:0
 #, python-format
 msgid "You cannot delete an already reserved slot."
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Your appointment is booked for <strong id=\"stBooking\"> in</strong>"
 msgstr ""

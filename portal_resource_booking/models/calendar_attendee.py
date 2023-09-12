@@ -38,12 +38,12 @@ class Attendee(models.Model):
     
     def do_decline(self):
 #        res = super(Attendee, self).do_decline()
-        res = self.write({'state': 'declined'})
+        res = self.write({'state': '1declined'})
         if res:
             for attendee in self:
                 event = attendee.event_id
                 if event.is_from_reservation_system:
-                    event._update_state(attendee,'declined')
+                    event._update_state(attendee,'1declined')
                     if event._is_management(attendee):
                         event.liberate_slots()
                         event.write({'active': False})

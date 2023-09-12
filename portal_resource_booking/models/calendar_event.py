@@ -10,18 +10,24 @@ class CalendarEvent(models.Model):
     _order = 'start'
     
     STATE_SELECTION = [
-        ('needsAction', 'Needs Action'),
-        ('declined', 'Declined'),
-        ('acc_from_cust', 'Accepted from customer'),
-        ('acc_from_res_mgr', 'Accepted from reservations manager'),
-        ('fully_accepted', 'Fully accepted'),
-        ('customer_arrived', 'Customer arrived'),
-        ('customer_not_shown', 'Customer not shown'),
+        ('0needsAction', 'Needs Action'),
+        ('1declined', 'Declined'),
+        ('2acc_from_cust', 'Accepted from customer'),
+        ('3acc_from_res_mgr', 'Accepted from reservations manager'),
+        ('4fully_accepted', 'Fully accepted'),
+        ('5customer_present_auto', 'Customer present (Auto)'),
+        ('6customer_present_confirmed', 'Customer present (Confirmed)'),
+        ('7customer_not_shown', 'Customer not shown'),
     ]
+    
+    CUSTOMER_SHOWN_MINUTES = 30
+    PERIOD_AUTOMATIC_UPDATE_MINUTES = 5
+    
+#    MANAGEMENT_USER = self.env.ref('portal_resource_booking.appointment_manager_user')
 
     def _get_default_state(self):
         if self.is_from_reservation_system:
-            return 'needsAction'
+            return '0needsAction'
         else:
             return False
         
@@ -36,13 +42,60 @@ class CalendarEvent(models.Model):
     slots = fields.Many2many(comodel_name='booking.resource.agenda.slot',readonly=True)
     requests = fields.Many2many(comodel_name='booking.request')
     special_request = fields.Char()
-    time_dependant_status = fields.Boolean(compute='_compute_status')
     customer = fields.Many2one(comodel_name='res.partner',compute='_compute_customer')
     agenda = fields.Many2one(comodel_name='booking.resource.agenda', compute='_compute_agenda')
     service = fields.Many2one(comodel_name='booking.resource.service', readonly=True)
     #En realidad es un compute pero no se puede hacer así porque siempre se llama al create desde ptython y eso hacer que no se llame al compute, y lo necesito almacenado
     service_type = fields.Many2one(comodel_name='booking.resource.agenda.type', related='service.type')
+    customer_phone = fields.Char(compute='_compute_partner_data')
+    customer_email = fields.Char(compute='_compute_partner_data')
+    allow_customer_shown = fields.Boolean(default=False)          
     
+    @api.depends('customer')
+    def _compute_partner_data(self):
+#        import sys;sys.path.append(r'/home/javier/eclipse/jee-2021/eclipse/plugins/org.python.pydev.core_10.2.1.202307021217/pysrc')
+#        import pydevd;pydevd.settrace('127.0.0.1',port=9999)
+        for record in self:
+            if record.is_from_reservation_system:
+                record.customer_email = record.customer.email
+                record.customer_phone = record.customer.phone
+            else:
+                record.customer_email = False
+                record.customer_phone = False
+                
+    def action_booking_confirm(self):
+        if self.is_from_reservation_system:
+            management_user = self.env.ref('portal_resource_booking.appointment_manager_user')
+            if self.env.user != management_user:
+                raise UserError(_('Only management user can confirm bookings.'))
+            self.attendee_ids.filtered(lambda x: x.partner_id.id == management_user.partner_id.id)[0].do_accept()
+        else:
+            raise UserError(_('This function is only for bookings, not for stantdard meetings.'))
+        return
+        
+    def action_customer_not_shown(self):
+        return self.write({'state': '7customer_not_shown'})
+    
+    def action_customer_shown(self):
+        #TODO: solo media hora antes de la hora de la reserva
+        return self.write({'state': '6customer_present_confirmed'})
+        
+    @api.model
+    def update_time_dependant_status(self):
+        now = fields.Datetime.now()
+        for record in self.env['calendar.event'].search([
+                ('is_from_reservation_system','=',True),
+                ('start','<=',now),
+                ('start','>=',now-timedelta(minutes=CalendarEvent.PERIOD_AUTOMATIC_UPDATE_MINUTES)) #TODO: Debería ser configurable
+            ]):
+            if record.state not in [('5customer_present_auto'),('6customer_present_confirmed'),('7customer_not_shown')]:
+                record.state = '5customer_present_auto'
+        for record in self.env['calendar.event'].search([
+                ('is_from_reservation_system','=',True),
+                ('start','<=',now+timedelta(minutes=CalendarEvent.CUSTOMER_SHOWN_MINUTES)) #TODO: Debería ser configurable
+            ]):
+            record.allow_customer_shown = True
+        
     @api.model
     def search_panel_select_multi_range(self, field_name, **kwargs):
         res = super(CalendarEvent, self).search_panel_select_multi_range(field_name,**kwargs)
@@ -94,12 +147,6 @@ class CalendarEvent(models.Model):
             else:
                 record.customer = False
     
-    def _compute_status(self):
-        for record in self:
-            #TODO: buscar los slots de hoy con state= fully_accepted and start_datetime < now
-            # ponerles estado ¿cliente ha llegado? ¿o poner el iteral cliente debería haber llegado?
-            record.time_dependant_status = False
-    
     def liberate_slots(self):
         for slot in self.slots:
             new_occupancy = slot.occupancy - self.resource_occupancy
@@ -116,25 +163,25 @@ class CalendarEvent(models.Model):
     def _update_state(self, changer, status):      
         if self._is_management(changer):
             if status == 'accepted':
-                if self.state == 'acc_from_cust':
-                    self.write({'state': 'fully_accepted'})
+                if self.state == '2acc_from_cust':
+                    self.write({'state': '4fully_accepted'})
                 else:
-                    self.write({'state': 'acc_from_res_mgr'})
+                    self.write({'state': '3acc_from_res_mgr'})
             elif status == 'tentative':
-                if self.state == 'fully_accepted':
-                    self.write({'state': 'acc_from_cust'})
-                elif self.state == 'acc_from_res_mgr':
-                    self.write({'state': 'needsAction'})
+                if self.state == '4fully_accepted':
+                    self.write({'state': '2acc_from_cust'})
+                elif self.state == '3acc_from_res_mgr':
+                    self.write({'state': '0needsAction'})
         else:
-            if status in ['declined', 'tentative']:
-                self.write({'state': 'declined'})
+            if status in ['1declined', 'tentative']:
+                self.write({'state': '1declined'})
                 manager_att = self.attendee_ids.filtered(lambda x: x != changer)
-                manager_att.write({'state': 'needsAction'})
+                manager_att.write({'state': '0needsAction'})
             else:
-                if self.state == 'acc_from_res_mgr':
-                    self.write({'state': 'fully_accepted'})
+                if self.state == '3acc_from_res_mgr':
+                    self.write({'state': '4fully_accepted'})
                 else:
-                    self.write({'state': 'acc_from_cust'})
+                    self.write({'state': '2acc_from_cust'})
         return True
     
     def create_activity(self, user, message):
@@ -148,9 +195,6 @@ class CalendarEvent(models.Model):
             'summary': message,
         })
         #TODO: remove message_post asociados
-        
-    def do_customer_not_shown(self):
-        return self.write({'state': 'customer_not_shown'})
     
     def is_short_notice(self, vals):
         start_date = datetime.strptime(vals['start'], DEFAULT_SERVER_DATETIME_FORMAT)
@@ -163,7 +207,7 @@ class CalendarEvent(models.Model):
     @api.model   
     def create(self, vals):
         if 'is_from_reservation_system' in vals and vals['is_from_reservation_system']:
-            vals['state'] = 'needsAction'
+            vals['state'] = '0needsAction'
             start_date = fields.Datetime.to_datetime(vals['start']).date()
             agenda = self.env['booking.resource.agenda.slot'].search([('id','in',vals['slots'])]).mapped('agenda')[0]
             services = self.env['booking.resource.service'].search([('agenda','=',agenda.id),('date','=',start_date)])

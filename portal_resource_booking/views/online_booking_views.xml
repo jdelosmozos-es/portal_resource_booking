@@ -228,7 +228,7 @@
                                         <label class="col-form-label">Instructions:</label>
                                         <input name="instructions" id="instructions_f" type="text" class="form-control" readonly="true" />
                                     </div>
-                                    <div class="form-group row" id="terms_conditions">
+                                    <div class="form-group row" id="terms_conditions_div">
                                         <label class="col-form-label" id="terms_conditions_label" >* Accept terms and conditions:</label>
                                         <input name="terms_conditions" id="terms_conditions" type="checkbox" class="col-form-label" required="true"/>
                                     </div>

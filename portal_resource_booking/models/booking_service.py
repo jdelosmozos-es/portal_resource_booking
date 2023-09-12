@@ -5,7 +5,7 @@ class BookingService(models.Model):
     _description = 'Object to group booking slots from an agenda depending on its space and type'
     _order = 'date'
     
-    agenda = fields.Many2one(comodel_name='booking.resource.agenda', readonly=True, required=True, ondelete='restrict')
+    agenda = fields.Many2one(comodel_name='booking.resource.agenda', readonly=True, required=True, ondelete='cascade')
     date = fields.Date(required=True, readonly=True)
     type = fields.Many2one(comodel_name='booking.resource.agenda.type', related='agenda.type')
     space = fields.Many2one(comodel_name='calendar.event.location', related='agenda.space')

@@ -5,8 +5,8 @@
 		<field name="arch" type="xml">
 			<form>
 				<group cols="2">
-					<field name="today" />
-					<field name="date" options="{'datepicker': {'minDate': 'now'}}"/>
+					<field name="today" invisible="1"/>
+					<field name="date" options="{'datepicker': {'disable_past_date': True}}"/>
 					<field name="space_domain" invisible="1"/>
 					<field name="space" domain="space_domain" attrs="{'invisible': [('date','=',False)]}" />
 					<field name="num_persons" attrs="{'invisible': [('space','=',False)]}" />
