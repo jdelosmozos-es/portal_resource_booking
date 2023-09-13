@@ -27,6 +27,7 @@
         'views/booking_request_view.xml',
         'views/booking_type_view.xml',
         'views/resource_view.xml',
+        'views/res_partner_views.xml',
     ],
     'assets': {
         'web.assets_qweb': [

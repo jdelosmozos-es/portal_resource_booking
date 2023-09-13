@@ -7,11 +7,13 @@
                 <span class="service_label_closed" >Closed</span>
                 <span class="service_label_closed_a"/>
             </section>
+            <!--
             <section t-if="value.closed_service === false">
                 <span class="service_label_open" >Open</span>
                 <span class="service_label_open_t"/>
                 <span class="service_label_open_a"/>
             </section>
+            -->
         </xpath>
     </t>
 </templates>
