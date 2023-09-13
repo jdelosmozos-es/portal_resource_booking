@@ -227,7 +227,7 @@ class BookingResourceAgenda(models.Model):
                 ]
         if online:
             domain.append(('is_open_online','=',True))
-        open_slots = Slot.sudo().search(domain)
+        open_slots = Slot.sudo().search(domain).sorted(lambda x:x.start_datetime)
         available_slots = Slot
         for slot in open_slots:
             event_duration_minutes = slot.agenda.event_duration_minutes
@@ -237,7 +237,8 @@ class BookingResourceAgenda(models.Model):
                 event_end_time = slot.end_datetime
             event_slots = Slot.sudo().search([
                                         ('start_datetime','>=', slot.start_datetime),
-                                        ('start_datetime','<=',event_end_time)
+                                        ('start_datetime','<=',event_end_time),
+                                        ('space','=',space_id)
                                     ])
             if event_slots and min(event_slots.mapped('availability')) >= int(num_persons):
                 available_slots |= slot

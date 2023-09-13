@@ -7,7 +7,7 @@
                     """Internal customers can manage customer bookings and make new ones""",
     'license': 'Other proprietary',
     'author': 'Javier L. de los Mozos, Aarón Misis',
-    'maintainer': 'Javier L. de los Mozos',
+    'maintainer': 'jdelosmozos@coit.es',
     'website': '',
     'live_test_url':'',
     'category': 'Website/Website',
@@ -37,11 +37,6 @@
         'web.assets_frontend': [
             'portal_resource_booking/static/src/scss/frontend_styles.scss',
             'portal_resource_booking/static/src/js/booking_frontend_controller.js',
-#            'web/static/lib/fontawesome/css/font-awesome.css',
-#            'web_online_appointment_resource/static/lib/datetime/css/datepicker.css',
-#            'web_online_appointment_resource/static/lib/datetime/js/bootstrap-datepicker.js',
-#            'web_online_appointment_resource/static/lib/datetime/js/locales/bootstrap-datepicker.es.js',
-#            'web_online_appointment_resource/static/lib/datetime/js/locales/bootstrap-datepicker.ca.js',
             'portal_resource_booking/static/src/js/select_multiple.js',
         ],
         'web.assets_backend': [

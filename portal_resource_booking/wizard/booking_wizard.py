@@ -31,6 +31,7 @@ class BookingWizard(models.TransientModel):
     special_request = fields.Char()
     email = fields.Char()
     today = fields.Date(compute='_compute_today')
+    is_online = fields.Boolean(default=False)
     
     @api.depends('slot')
     def _compute_today(self):
@@ -76,6 +77,8 @@ class BookingWizard(models.TransientModel):
     
     def action_book(self):
         slot = self.slot
+        if self.is_online and not slot.is_open_online:
+            return {'error': _('This day and hour do not allow online bookings.')}
         start_datetime = slot.start_datetime
         agenda = slot.agenda
         if agenda.event_duration_minutes:

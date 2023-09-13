@@ -154,16 +154,6 @@
                                 </div>
                             </div>
                             <div class="tag-styles time" id="time">
-                                <div class="container_lunch" style="display: none">
-                                    <h4>Lunch</h4>
-                                    <div class="tag-styles time time_lunch" id="time_lunch">
-                                    </div>
-                                </div>
-                                <div class="container_dinner" style="display: none">
-                                    <h4>Dinner</h4>
-                                    <div class="tag-styles time time_dinner" id="time_dinner">
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="done_button_appointment" id="done_button" style="display: none">

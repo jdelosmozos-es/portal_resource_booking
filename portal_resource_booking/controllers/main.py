@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 
-from odoo import fields, http
+from odoo import fields, http, _
 from odoo.http import request
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, date_utils
-from babel.dates import format_date
 import json
 
 #import json
@@ -103,6 +101,9 @@ class MemberAppointment(http.Controller):
         space_id = int(values['space_id']) # = request.env['calendar.event.location'].sudo().browse(int(values['space_id']))
         requests = [int(x) for x in values['request']]
         partner = Partner.search([('email', '=', values['email'])], limit=1)
+        if partner and request.env['calendar.event'].is_management(partner):
+            values['error'] = _('Management user cannot act as customer')
+            return values
         if not partner:
             partner = Partner.create({
                 'name': values['name'],
@@ -124,9 +125,12 @@ class MemberAppointment(http.Controller):
                 'slot': slot[0].id,
                 'partner': partner.id,
                 'requests': [(6,0,requests)] if requests else False,
-                'special_request': values['special_request']
+                'special_request': values['special_request'],
+                'is_online': True,
             })
-        wizard.action_book()
+        res = wizard.action_book()
+        if 'error' in res:
+            values['error'] = res['error']
         return values
 
     @http.route('/calendar/timeslots', type='json', auth='public')
@@ -139,14 +143,21 @@ class MemberAppointment(http.Controller):
         sel_date = str_date.split("-")
         date_date = date(int(sel_date[2]), int(sel_date[1]), int(sel_date[0]))
         slots = request.env['booking.resource.agenda'].get_time_slots(date_date, int(num_persons), int(space_id), online=True)
-        mylst = [fields.Datetime.context_timestamp(self, s.start_datetime).strftime('%H:%M').replace(':', '') for s in slots]
-        sorted_slots = [my_hash[:2] + ':' + my_hash[2:] for my_hash in sorted(mylst, key=int)]
+#        mylst = [fields.Datetime.context_timestamp(self, s.start_datetime).strftime('%H:%M').replace(':', '') for s in slots]
+#        sorted_slots = [my_hash[:2] + ':' + my_hash[2:] for my_hash in sorted(mylst, key=int)]
         info_list = []
+        slot_list = []
+        type_list = []
+        for slot in slots:
+            type_name = slot.type.name
+            if type_name not in type_list:
+                type_list.append(type_name)
+            slot_list.append({'value': fields.Datetime.context_timestamp(self, slot.start_datetime).strftime('%H:%M'), 'type':type_name})
         agendas = slots.mapped('agenda')
         for agenda in agendas:
             if agenda.additional_info_is_for_all_times:
                 add_info = agenda.additional_info[0]
-                for slot in sorted_slots:
+                for slot in slots:
                     info_list.append({'hour': slot, 
                                       'text': add_info.text, 
                                       'img': self.image_data_uri(add_info.image) if add_info.image else False})
@@ -157,4 +168,4 @@ class MemberAppointment(http.Controller):
                                       'text': add_info.text, 
                                       'img': self.image_data_uri(add_info.image) if add_info.image else False})
        
-        return {'slots': sorted_slots,'instructions': info_list}
+        return {'slots': slot_list,'instructions': info_list, 'types': type_list}

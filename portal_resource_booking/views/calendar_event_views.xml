@@ -54,7 +54,7 @@
 				<field name="customer"/>
 				<field name="start"/>
 				<field name="allow_customer_shown"/>
-				<progressbar field="state" colors='{"needsAction": "secondary", "declined": "danger", "acc_from_cust": "primary", "acc_from_res_mgr": "primary", "fully_accepted": "info", "customer_arrived": "success", "customer_not_shown": "warning" }'/>
+				<progressbar field="state" colors='{"0needsAction": "secondary", "1declined": "danger", "2acc_from_cust": "primary", "3acc_from_res_mgr": "primary", "4fully_accepted": "info", "5customer_present_auto": "success", "6customer_present_confirmed": "success","7customer_not_shown": "warning" }'/>
 				<templates>
 					<t t-name="kanban-box">
 						<div t-attf-class="oe_kanban_card" style="border-radius:14px;box-shadow: 0 0 0.5rem hsl(300, 40%, 5%);margin-top:10px;">
@@ -75,7 +75,7 @@
 								</div>
 								<strong>
 									<p class="mb-2" style="font-size: 13px;margin-right: 10px">
-										<field name="state" widget="label_selection" options="{'classes': {'0needsAction': 'secondary', '1declined': 'danger', '2acc_from_cust': 'primary', '3acc_from_res_mgr': 'primary', '4fully_accepted': 'info', '5customer_arrived': 'success', '6customer_not_shown': 'warning' }}"/>
+										<field name="state" widget="label_selection" options="{'classes': {'0needsAction': 'secondary', '1declined': 'danger', '2acc_from_cust': 'primary', '3acc_from_res_mgr': 'primary', '4fully_accepted': 'info', '5customer_present_auto': 'success', '6customer_present_confirmed': 'success','7customer_not_shown': 'warning' }}"/>
 									</p>
 								</strong>
 							</div>
@@ -160,13 +160,14 @@
         <field name="arch" type="xml">
             <search>
                 <field name="customer"/>
-                <field name="start"/> 
-                <field name="start_date" invisible="1"/>
-                <field name="event_location_id"/>
-                <filter name="today" string="Today" separator="1" domain="[('start_date','=',context_today().strftime('%Y-%m-%d'))]" />
-                <filter name="next_7_days" string="Next 7 days" separator="1" domain="[('start_date','&gt;=',context_today().strftime('%Y-%m-%d')),('start_date','&lt;',(context_today()+relativedelta(days=7)).strftime('%Y-%m-%d')),]" />
-                <filter name="next" string="Next" separator="1" domain="[('start_date','&gt;=',context_today().strftime('%Y-%m-%d'))]" />
+                <filter string="Needs Action" name="state" domain="[('state', '=', '0needsAction')]"/>
+                <filter string="Declined" name="state" domain="[('state', '=', '1declined')]"/>
+                <filter string="Accepted from customer" name="state" domain="[('state', '=', '2acc_from_cust')]"/>
+                <filter string="Accepted from reservations manager" name="state" domain="[('state', '=', '3acc_from_res_mgr')]"/>
                 <filter string="Fully accepted" name="state" domain="[('state', '=', '4fully_accepted')]"/>
+                <filter string="Customer present (Auto)" name="state" domain="[('state', '=', '5customer_present_auto')]"/>
+                <filter string="Customer present (Confirmed)" name="state" domain="[('state', '=', '6customer_present_confirmed')]"/>
+                <filter string="Customer not shown" name="state" domain="[('state', '=', '7customer_not_shown')]"/>
                 <group expand="0" string="Group By">
 <!--					<filter string="Date" name="start_date_group" domain="[]" context="{'group_by':'start_date:day'}"/> -->
 <!--					<filter string="Space" name="space" domain="[]" context="{'group_by':'event_location_id'}"/> -->

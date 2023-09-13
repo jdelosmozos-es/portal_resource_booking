@@ -51,6 +51,14 @@ class CalendarEvent(models.Model):
     customer_email = fields.Char(compute='_compute_partner_data')
     allow_customer_shown = fields.Boolean(default=False)          
     
+    @api.model
+    def is_management(self, partner):
+        management_user = self.env.ref('portal_resource_booking.appointment_manager_user')
+        if partner == management_user.partner_id:
+            return True
+        else:
+            return False
+        
     @api.depends('customer')
     def _compute_partner_data(self):
 #        import sys;sys.path.append(r'/home/javier/eclipse/jee-2021/eclipse/plugins/org.python.pydev.core_10.2.1.202307021217/pysrc')
@@ -139,11 +147,15 @@ class CalendarEvent(models.Model):
     def _compute_customer(self):
         for record in self:
             if record.is_from_reservation_system:
+                found = False
                 for attendee in record.attendee_ids:
                     if record._is_management(attendee):
                         continue
                     else:
+                        found = True
                         record.customer = attendee.partner_id
+                if not found:
+                    record.customer = False
             else:
                 record.customer = False
     
