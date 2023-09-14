@@ -101,11 +101,11 @@ class MemberAppointment(http.Controller):
         space_id = int(values['space_id']) # = request.env['calendar.event.location'].sudo().browse(int(values['space_id']))
         requests = [int(x) for x in values['request']]
         partner = Partner.search([('email', '=', values['email'])], limit=1)
-        if partner and request.env['calendar.event'].is_management(partner):
+        if partner and request.env['calendar.event'].sudo().is_management(partner):
             values['error'] = _('Management user cannot act as customer')
             return values
         if not partner:
-            partner = Partner.create({
+            partner = Partner.sudo().create({
                 'name': values['name'],
                 'email': values['email'],
                 'phone': values['phone'],
@@ -128,7 +128,7 @@ class MemberAppointment(http.Controller):
                 'special_request': values['special_request'],
                 'is_online': True,
             })
-        res = wizard.action_book()
+        res = wizard.sudo().action_book()
         if 'error' in res:
             values['error'] = res['error']
         return values

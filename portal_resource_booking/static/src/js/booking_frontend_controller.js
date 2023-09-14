@@ -278,7 +278,7 @@ odoo.define('portal_resource_booking.booking', function (require) {
 													if ('error' in response) {
 														$("#stBooking").html('Error: '+response.error)
 													} else {
-														$("#stBooking").html(fcSelectedDate + ' ' + fcSelectedTime + ' in ' + spaceName)
+														$("#stBooking").html(fcSelectedDate + ' ' + fcSelectedTime + _t(' in ') + spaceName)
 													}
 													$("#wrap_thanks").show();
 												})

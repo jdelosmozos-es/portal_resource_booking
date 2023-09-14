@@ -33,6 +33,13 @@ msgstr " para "
 #. openerp-web
 #: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
 #, python-format
+msgid " in "
+msgstr " en "
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
 msgid " on "
 msgstr " el "
 

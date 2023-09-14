@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-13 19:55+0000\n"
-"PO-Revision-Date: 2023-09-13 19:55+0000\n"
+"POT-Creation-Date: 2023-09-14 07:52+0000\n"
+"PO-Revision-Date: 2023-09-14 07:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,6 +27,13 @@ msgstr ""
 #: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
 #, python-format
 msgid " for "
+msgstr ""
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " in "
 msgstr ""
 
 #. module: portal_resource_booking
@@ -685,6 +692,7 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day4
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__4
 msgid "Friday"
 msgstr ""
@@ -698,6 +706,11 @@ msgstr ""
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_resource_search
 msgid "Group By"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model:ir.model,name:portal_resource_booking.model_ir_http
+msgid "HTTP Routing"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -895,6 +908,7 @@ msgid "Meeting Locations"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day0
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__0
 msgid "Monday"
 msgstr ""
@@ -1099,6 +1113,7 @@ msgid "Responsible User"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day5
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__5
 msgid "Saturday"
 msgstr ""
@@ -1228,6 +1243,7 @@ msgid ""
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day6
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__6
 msgid "Sunday"
 msgstr ""
@@ -1272,6 +1288,7 @@ msgid "This function is only for bookings, not for stantdard meetings."
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day3
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__3
 msgid "Thursday"
 msgstr ""
@@ -1287,6 +1304,7 @@ msgid "Today"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day1
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__1
 msgid "Tuesday"
 msgstr ""
@@ -1322,6 +1340,7 @@ msgid "User"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day2
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__2
 msgid "Wednesday"
 msgstr ""
