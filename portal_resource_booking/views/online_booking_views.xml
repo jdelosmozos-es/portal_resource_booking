@@ -8,7 +8,7 @@
 
                     <div class="container_appointment_info">
                         <div class="container_appointment_instructions">
-                            <h3>IT IS VERY SYMPLE</h3>
+                            <h3>IT IS VERY SIMPLE</h3>
                             <ol>
                                 <li>
                                     <span>
@@ -43,6 +43,7 @@
                             If you have any kind of doubt or want to make any query, do not hesitate to contact us.
                             </p>
                             <p>If the appointment you want to book is for a date after 3 months, we recommend making the reservation by phone or email.</p>
+                            <p>Tel. 600 764 517</p>
                         </div>
                         <div class="container_appointment_letter" style="display: none;" id="ins_last">
                             <h3>LAST STEP</h3>
@@ -56,6 +57,7 @@
                             <p>
                             If you have any kind of doubt or want to make any query, do not hesitate to contact us
                             </p>
+                            <p>Tel. 600 764 517</p>
                         </div>
                         <div class="container_appointment_letter" style="display: none;" id="ins_img">
                         </div>

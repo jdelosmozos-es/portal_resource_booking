@@ -6,14 +6,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-13 14:20+0000\n"
-"PO-Revision-Date: 2023-09-13 14:20+0000\n"
+"POT-Creation-Date: 2023-09-13 19:55+0000\n"
+"PO-Revision-Date: 2023-09-13 19:55+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " at "
+msgstr ""
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " for "
+msgstr ""
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " on "
+msgstr ""
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " persons"
+msgstr ""
 
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
@@ -287,6 +315,13 @@ msgstr ""
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_tree_view
 msgid "Booking hour"
+msgstr ""
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid "Booking in : "
 msgstr ""
 
 #. module: portal_resource_booking
@@ -697,7 +732,7 @@ msgstr ""
 
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
-msgid "IT IS VERY SYMPLE"
+msgid "IT IS VERY SIMPLE"
 msgstr ""
 
 #. module: portal_resource_booking
@@ -947,6 +982,14 @@ msgid "Num Persons"
 msgstr ""
 
 #. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid "Number of persons"
+msgstr ""
+
+#. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_resource_service
 msgid ""
 "Object to group booking slots from an agenda depending on its space and type"
@@ -1187,6 +1230,11 @@ msgstr ""
 #. module: portal_resource_booking
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__6
 msgid "Sunday"
+msgstr ""
+
+#. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Tel. 600 764 517"
 msgstr ""
 
 #. module: portal_resource_booking

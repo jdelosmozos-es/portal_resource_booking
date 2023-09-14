@@ -16,6 +16,34 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " at "
+msgstr " a las "
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " for "
+msgstr " para "
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " on "
+msgstr " el "
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid " persons"
+msgstr " asistentes"
+
+#. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
 msgid "* Accept terms and conditions:"
 msgstr "* Tiene que aceptar los términos y condiciones: "
@@ -323,6 +351,13 @@ msgstr "Tipos de servicio"
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_tree_view
 msgid "Booking hour"
 msgstr "Hora de reserva"
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid "Booking in : "
+msgstr "Reserva en: "
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__booking_slots
@@ -732,8 +767,8 @@ msgstr ""
 
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
-msgid "ES MUY SIMPLE"
-msgstr ""
+msgid "IT IS VERY SIMPLE"
+msgstr "ES MUY SIMPLE"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_exception_icon
@@ -983,7 +1018,15 @@ msgstr "Reservas no presentadas"
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__num_persons
 msgid "Num Persons"
-msgstr "Num personas"
+msgstr "Num. asistentes"
+
+#. module: portal_resource_booking
+#. openerp-web
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#: code:addons/portal_resource_booking/static/src/js/booking_frontend_controller.js:0
+#, python-format
+msgid "Number of persons"
+msgstr "Nº asistentes"
 
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_resource_service
@@ -1035,7 +1078,7 @@ msgstr "Periodos en los que no es posible hacer reservas."
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_calendar_kanban_view
 msgid "Persons"
-msgstr "Personas"
+msgstr "Asistentes"
 
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
@@ -1050,7 +1093,7 @@ msgstr "Propuestas de peticiones del cliente a mostrar en las reservas."
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
 msgid "RESERVE IN CARAVISTA"
-msgstr "RESERVE"
+msgstr "RESERVA"
 
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
@@ -1087,7 +1130,7 @@ msgstr "Mensaje del sistema de reservas"
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__resource_occupancy
 msgid "Resource occupancy"
-msgstr "Num. de personas"
+msgstr "Num. de asistentes"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_calendar_event__activity_user_id
@@ -1121,7 +1164,7 @@ msgstr "Servicio"
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__services
 msgid "Services"
-msgstr ""
+msgstr "Servicios"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__services_domain
@@ -1231,6 +1274,11 @@ msgid "Sunday"
 msgstr "Domingo"
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
+msgid "Tel. 600 764 517"
+msgstr "Tel. 600 764 517"
+
+#. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__text
 msgid "Text"
 msgstr "Texto"
@@ -1246,6 +1294,8 @@ msgid ""
 "The reserved table will be held from the reserved time until 15 minutes later.\n"
 "                            From that moment on, it will be free for other customers."
 msgstr ""
+"La mesa quedará reservada hasta 15 minutos pasada la hora de reserva.\n"
+"                            A partir de ese momento quedará libre para otros clientes."
 
 #. module: portal_resource_booking
 #: model:ir.model.constraint,message:portal_resource_booking.constraint_booking_resource_agenda_slot_slot_uniq
@@ -1370,4 +1420,4 @@ msgstr "No se puede borrar una hora ya reservada."
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
 msgid "Your appointment is booked for <strong id=\"stBooking\"> in</strong>"
-msgstr "Su reserva está registrada para <strong id=\"stBooking\"> in</strong>"
+msgstr "Su reserva está registrada para <strong id=\"stBooking\"> en</strong>"

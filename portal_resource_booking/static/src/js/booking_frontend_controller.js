@@ -5,6 +5,8 @@ odoo.define('portal_resource_booking.booking', function (require) {
 	// var Model = require('web.Model');
 	var ajax = require('web.ajax');
 	var time = require('web.time');
+	var core = require('web.core');
+	var _t = core._t;
 	var NewData = PublicWidget.Widget.extend({
 		selector: '#date_time_set_customer_calendar',
 		start: function () {
@@ -17,7 +19,7 @@ odoo.define('portal_resource_booking.booking', function (require) {
 			$("#form-group-persons").hide();
 			$("#time").hide();
 			if (document.getElementById("label_max_capacity")) {
-				$("#label_max_capacity").html("Number of persons") // (Max. " + (document.getElementById("label_max_capacity").innerText ? document.getElementById("label_max_capacity").innerText : 0) + "):");
+				$("#label_max_capacity").html(_t("Number of persons")) // (Max. " + (document.getElementById("label_max_capacity").innerText ? document.getElementById("label_max_capacity").innerText : 0) + "):");
 			}
 			$("#step1").addClass("step_focus");
 			$("#step2").removeClass("step-done");
@@ -149,7 +151,7 @@ odoo.define('portal_resource_booking.booking', function (require) {
 						var numPersons = this.attributes.nodevalue.value;
 						var num = document.getElementById("num_persons_input").value | 0;
 						var nPersons = num > 0 ? num : false;
-						$("#label_max_capacity").html("Number of persons"); // (Max. " + numPersons + "):");
+						$("#label_max_capacity").html(_t("Number of persons")); // (Max. " + numPersons + "):");
 						//document.getElementById("num_persons_input").placeholder = "Max. " + numPersons;
 						$("#form-group-persons").show();
 						if (nPersons > numPersons || nPersons === false) {
@@ -226,7 +228,7 @@ odoo.define('portal_resource_booking.booking', function (require) {
 										$("#ins_img").show();
 										$("#ins_contact").show();
 										$("#ins_last").show();
-										$("#appointment_date_info").html('Booking in : ' + spaceName + " on " + fcSelectedDate + " at " + fcSelectedTime + " for " + nPersons + " persons");
+										$("#appointment_date_info").html(_t('Booking in : ') + spaceName + _t(" on ") + fcSelectedDate + _t(" at ") + fcSelectedTime + _t(" for ") + nPersons + _t(" persons"));
 										$("#instructions_f").val(instructionsText)
 										if (instructionImg) {
 											$("#ins_img").html(

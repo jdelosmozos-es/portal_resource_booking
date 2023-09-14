@@ -3,6 +3,7 @@ from odoo.exceptions import ValidationError, UserError
 from odoo.tools import date_utils
 from dateutil.relativedelta import relativedelta 
 from datetime import timedelta, datetime
+from babel.dates import format_date
 
 class BookingResourceAgenda(models.Model):
     _name = 'booking.resource.agenda'
@@ -313,7 +314,9 @@ class BookingResourceAgendaSlot(models.Model):
         DateTimeHelper = self.env['booking.datetime.helper']
         for record in self:
             date = DateTimeHelper.get_user_datetime(record.start_datetime)
-            result.append((record.id, '%s - %s [%d]' % (date.time(), date.date(), record.availability)))
+            result.append((record.id, '%s - %s [%d]' % (date.time(), 
+                                                        format_date(date.date(),locale=self.env.user.lang,format='short'),
+                                                        record.availability)))
         return result
     
     def get_additional_info(self):
@@ -343,7 +346,7 @@ class BookingWeekoff(models.Model):
     _name = 'booking.weekoff'
     _description = 'Week day when it is not possible to make bookings.'
 
-    name = fields.Char(required=True)
+    name = fields.Char(required=True, translate=True)
     dayofweek = fields.Selection([
         ('0', 'Monday'),
         ('1', 'Tuesday'),
