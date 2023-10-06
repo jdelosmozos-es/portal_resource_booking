@@ -20,6 +20,7 @@
         'views/agenda_views.xml',
         'views/online_booking_views.xml',
         'wizard/close_service_wizard_view.xml',
+        'wizard/open_service_wizard_view.xml',
         'wizard/booking_wizard_view.xml',
 #        'config/res_config_settings_views.xml',
         'views/calendar_event_views.xml',

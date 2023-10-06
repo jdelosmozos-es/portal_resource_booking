@@ -34,4 +34,10 @@ class BookingService(models.Model):
             record.write({'is_open_online': False})
             for slot in record.slots:
                 slot.write({'is_open_online': False})
+    
+    def open_online(self):
+        for record in self:
+            record.write({'is_open_online': True})
+            for slot in record.slots:
+                slot.write({'is_open_online': True})
                 

@@ -31,11 +31,20 @@
 <!--        <field name="view_id" ref="booking_resource_calendar_tree_view"/> -->
     </record>
     
+    <record id="action_open_service" model="ir.actions.act_window">
+        <field name="name">Open service</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">booking.open.service.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
     <menuitem id="menu_booking_resource" name="Bookings" sequence="1" web_icon="portal_resource_booking,static/src/img/icon.png"/>
     <menuitem id="menu_booking_resource_agenda" parent="menu_booking_resource" name="Agenda" sequence="1" action="action_calendar_event" />
-    <menuitem id="menu_booking_resource_configuration" name="Configuration" sequence="5" parent="menu_booking_resource" />
+    <menuitem id="menu_booking_resource_configuration" name="Configuration" sequence="6" parent="menu_booking_resource" />
     <menuitem id="menu_booking_resource_agenda_configuration" name="Agenda Configuration" parent="menu_booking_resource" action="action_booking_resource_agenda" sequence="2" />
     <menuitem id="menu_new_booking" name="New booking" parent="menu_booking_resource" action="action_booking_wizard" sequence="3" />
     <menuitem id="menu_close_service" name="Close service" parent="menu_booking_resource" action="action_close_service" sequence="4" />
+    <menuitem id="menu_open_service" name="Open service" parent="menu_booking_resource" action="action_open_service" sequence="5" />
 
 </odoo>

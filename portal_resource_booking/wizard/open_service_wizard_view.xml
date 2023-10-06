@@ -1,0 +1,30 @@
+<odoo>
+	<data>
+		<record id="open_service_form_view" model='ir.ui.view'>
+			<field name="name">open.service.form.view</field>
+			<field name="model">booking.open.service.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<span attrs="{'invisible': ['|',('services_domain','=','[]'),('date','=',False)]}">
+						Select the services to open.
+					</span>
+					<span attrs="{'invisible': ['|',('services_domain','!=','[]'),('date','=',False)]}">
+						There is no service closed this date.
+					</span>
+					<group>
+						<field name="name" invisible="1"/>
+						<field name="date" />
+						<field name="services_domain" invisible="1"/>
+						<field name="services" domain="services_domain" widget="many2many_checkboxes" attrs="{'invisible': ['|',('date','=',False),('services_domain','=','[]')]}"/>
+					</group>
+					<footer>
+		        		<button type="object" class="oe_highlight" name="action_open_service" attrs="{'invisible': [('services_domain','=','[]')]}">
+		        			Accept
+		        		</button>
+		        		<button string="Cancel"  special="cancel"/>
+		        	</footer>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

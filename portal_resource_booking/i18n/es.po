@@ -91,6 +91,23 @@ msgstr ""
 "\t\t\t\t\t</span>"
 
 #. module: portal_resource_booking
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.open_service_form_view
+msgid ""
+"<span attrs=\"{'invisible': ['|',('services_domain','=','[]'),('date','=',False)]}\">\n"
+"\t\t\t\t\t\tSelect the services to open.\n"
+"\t\t\t\t\t</span>\n"
+"\t\t\t\t\t<span attrs=\"{'invisible': ['|',('services_domain','!=','[]'),('date','=',False)]}\">\n"
+"\t\t\t\t\t\tThere is no service closed this date.\n"
+"\t\t\t\t\t</span>"
+msgstr ""
+"<span attrs=\"{'invisible': ['|',('services_domain','=','[]'),('date','=',False)]}\">\n"
+"\t\t\t\t\t\tSelecciona los servicios a reabrir.\n"
+"\t\t\t\t\t</span>\n"
+"\t\t\t\t\t<span attrs=\"{'invisible': ['|',('services_domain','!=','[]'),('date','=',False)]}\">\n"
+"\t\t\t\t\t\tNo hay servicios cerrados en esa fecha.\n"
+"\t\t\t\t\t</span>"
+
+#. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
 msgid ""
 "<span class=\"span-step\">\n"
@@ -182,6 +199,7 @@ msgstr ""
 #. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.close_service_form_view
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.open_service_form_view
 msgid "Accept"
 msgstr "Aceptar"
 
@@ -442,6 +460,7 @@ msgstr "Reservas"
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_calendar
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.close_service_form_view
+#: model_terms:ir.ui.view,arch_db:portal_resource_booking.open_service_form_view
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -504,6 +523,7 @@ msgstr "Crear nuevos documentos"
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__create_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__create_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_holiday__create_uid
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__create_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request__create_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__create_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__create_uid
@@ -518,6 +538,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__create_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__create_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_holiday__create_date
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__create_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request__create_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__create_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__create_date
@@ -582,6 +603,7 @@ msgstr ""
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__date
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_service__date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_wizard__date
 msgid "Date"
@@ -633,6 +655,7 @@ msgstr "Descripción del espacio."
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__display_name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__display_name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_holiday__display_name
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__display_name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request__display_name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__display_name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__display_name
@@ -727,6 +750,7 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day4
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__4
 msgid "Friday"
 msgstr "Viernes"
@@ -741,6 +765,11 @@ msgstr "Confirmada completamente"
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.appointment_resource_search
 msgid "Group By"
 msgstr "Agrupar por"
+
+#. module: portal_resource_booking
+#: model:ir.model,name:portal_resource_booking.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
 
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_datetime_helper
@@ -762,6 +791,7 @@ msgstr "Vacaciones"
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__id
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__id
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_holiday__id
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__id
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request__id
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__id
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__id
@@ -880,6 +910,7 @@ msgstr "ÚLTIMO PASO"
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information____last_update
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard____last_update
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_holiday____last_update
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard____last_update
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request____last_update
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda____last_update
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot____last_update
@@ -894,6 +925,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__write_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__write_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_holiday__write_uid
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__write_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request__write_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__write_uid
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__write_uid
@@ -908,6 +940,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_additional_information__write_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__write_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_holiday__write_date
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__write_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request__write_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__write_date
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__write_date
@@ -941,6 +974,7 @@ msgid "Meeting Locations"
 msgstr "Espacios"
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day0
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__0
 msgid "Monday"
 msgstr "Lunes"
@@ -957,6 +991,7 @@ msgstr ""
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__name
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_request__name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda__name
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_type__name
@@ -1058,6 +1093,12 @@ msgid "Open"
 msgstr "Abierto online"
 
 #. module: portal_resource_booking
+#: model:ir.actions.act_window,name:portal_resource_booking.action_open_service
+#: model:ir.ui.menu,name:portal_resource_booking.menu_open_service
+msgid "Open service"
+msgstr "Reabrir servicio online"
+
+#. module: portal_resource_booking
 #: model_terms:ir.ui.view,arch_db:portal_resource_booking.booking_resource_agenda_form_view
 msgid "Other Info"
 msgstr "Otra información"
@@ -1145,6 +1186,7 @@ msgid "Responsible User"
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day5
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__5
 msgid "Saturday"
 msgstr "Sábado"
@@ -1170,11 +1212,13 @@ msgstr "Servicio"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__services
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__services
 msgid "Services"
 msgstr "Servicios"
 
 #. module: portal_resource_booking
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_close_service_wizard__services_domain
+#: model:ir.model.fields,field_description:portal_resource_booking.field_booking_open_service_wizard__services_domain
 msgid "Services Domain"
 msgstr ""
 
@@ -1276,6 +1320,7 @@ msgid ""
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day6
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__6
 msgid "Sunday"
 msgstr "Domingo"
@@ -1322,6 +1367,7 @@ msgid "This function is only for bookings, not for stantdard meetings."
 msgstr ""
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day3
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__3
 msgid "Thursday"
 msgstr "Jueves"
@@ -1337,6 +1383,7 @@ msgid "Today"
 msgstr "Hoy"
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day1
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__1
 msgid "Tuesday"
 msgstr "Martes"
@@ -1372,6 +1419,7 @@ msgid "User"
 msgstr "Usuario"
 
 #. module: portal_resource_booking
+#: model:booking.weekoff,name:portal_resource_booking.weekoff_day2
 #: model:ir.model.fields.selection,name:portal_resource_booking.selection__booking_weekoff__dayofweek__2
 msgid "Wednesday"
 msgstr "Miércoles"
@@ -1398,6 +1446,7 @@ msgstr "¿Dónde quieres reservar?"
 
 #. module: portal_resource_booking
 #: model:ir.model,name:portal_resource_booking.model_booking_close_service_wizard
+#: model:ir.model,name:portal_resource_booking.model_booking_open_service_wizard
 msgid "Wizard to close services."
 msgstr "No aceptar reservas online."
 
