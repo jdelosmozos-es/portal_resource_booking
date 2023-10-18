@@ -183,4 +183,8 @@
         </field>
     </record>
     
+    <record id="calendar.action_calendar_event" model="ir.actions.act_window">
+        <field name="domain">[('is_from_reservation_system','=',False)]</field>
+    </record>
+
 </odoo>

@@ -965,7 +965,7 @@ msgstr "El usuario de gestión no puede actuar como cliente"
 #. module: portal_resource_booking
 #: code:addons/portal_resource_booking/wizard/booking_wizard.py:0
 #, python-format
-msgid "Manual booking by user internal"
+msgid "Manual booking by internal user"
 msgstr "Reserva manual efectuada por un usuario interno"
 
 #. module: portal_resource_booking
@@ -1080,6 +1080,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:portal_resource_booking.field_booking_resource_agenda_slot__occupancy
 msgid "Occupancy"
 msgstr "Ocupación"
+
+#. module: portal_resource_booking
+#: code:addons/portal_resource_booking/wizard/booking_wizard.py:0
+#, python-format
+msgid "Online booking"
+msgstr "Reserva online"
 
 #. module: portal_resource_booking
 #: code:addons/portal_resource_booking/models/calendar_event.py:0
@@ -1353,6 +1359,12 @@ msgstr ""
 #: model:ir.model.constraint,message:portal_resource_booking.constraint_booking_resource_agenda_slot_slot_uniq
 msgid "There cannot be two slots at the same time for the same space."
 msgstr "No puede haber dos horas reservables para la misma hora y el mismo espacio."
+
+#. module: portal_resource_booking
+#: code:addons/portal_resource_booking/wizard/booking_wizard.py:0
+#, python-format
+msgid "There is already a booking with the same data."
+msgstr "Ya existe una reserva con esos mismos datos."
 
 #. module: portal_resource_booking
 #: code:addons/portal_resource_booking/wizard/booking_wizard.py:0

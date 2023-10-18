@@ -1,6 +1,7 @@
 from odoo import models, fields, api, _
 from datetime import timedelta
 import json
+from odoo.exceptions import UserError
 
 class BookingWizard(models.TransientModel):
     _name = 'booking.wizard'
@@ -95,16 +96,22 @@ class BookingWizard(models.TransientModel):
             'stop': fields.Datetime.to_string(stop_datetime),
             'alarm_ids': [(6, 0, agenda.reminders.ids)],
             'resource': self.space.id,
-            'description': _('Manual booking by user internal'),
+            'description': _('Manual booking by internal user') if not self.is_online else _('Online booking'),
             'resource_occupancy': self.num_persons,
             'location': self.space.name,
             'event_location_id': self.space.id,
             'additional_information': self.additional_info,
             'is_from_reservation_system': True,
             'slots': slots.ids,
-            'requests': self.requests,
+            'requests': self.requests.ids,
             'special_request': self.special_request,
         }
+        if self._booking_already_exists(event_vals):
+            message = _('There is already a booking with the same data.')
+            if self.is_online:
+                return {'error': message}
+            else:
+                raise UserError(message)
         user = self.env.ref('portal_resource_booking.appointment_system_user', raise_if_not_found=False).sudo()
         event = self.env['calendar.event'].sudo().with_user(user).create(event_vals)
         for slot in slots:
@@ -122,4 +129,24 @@ class BookingWizard(models.TransientModel):
             'type': 'ir.actions.client',
             'tag': 'reload',  
             }
+        
+    def _booking_already_exists(self,vals):
+        domain = []
+        for key, value in vals.items():
+            if key == 'partner_ids':
+                domain.append((key,'=',value[0][2][0]))
+            elif key == 'requests':
+                if not value:
+                    domain.append((key,'=',False))
+                else:
+                    domain.append((key,'=',value))
+            elif key in ('alarm_ids','stop','description'):
+                continue
+            else:
+                domain.append((key,'=',value))
+        existing_booking = self.env['calendar.event'].search(domain)
+        if existing_booking:
+            return True
+        else:
+            return False
         
