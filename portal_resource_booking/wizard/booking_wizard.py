@@ -9,7 +9,9 @@ class BookingWizard(models.TransientModel):
     
     def _partner_domain(self):
         management_user = self.env.ref('portal_resource_booking.appointment_manager_user', raise_if_not_found=False)
-        system_user = self.env.ref('portal_resource_booking.appointment_system_user', raise_if_not_found=False).sudo()
+        system_user = self.env.ref('portal_resource_booking.appointment_system_user', raise_if_not_found=False)
+        if (system_user):
+            system_user.sudo()
         if management_user and not system_user:
             return [management_user.partner_id.id]
         elif not management_user and system_user:
