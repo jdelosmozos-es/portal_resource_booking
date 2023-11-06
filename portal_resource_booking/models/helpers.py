@@ -52,6 +52,7 @@ class DateTimeHelper(models.AbstractModel):
         
     @api.model
     def get_time_string_from_float(self, float_time):
-        hours, minutes = divmod(float_time*60, 60)
-        return '%i:%i' % (hours,minutes)
+        hours, mins = divmod(float_time*60, 60)
+        minutes = str(int(mins)).zfill(2)
+        return '%i:%s' % (hours,minutes)
     

@@ -156,9 +156,11 @@ class MemberAppointment(http.Controller):
         agendas = slots.mapped('agenda')
         for agenda in agendas:
             if agenda.additional_info_is_for_all_times:
+#                import sys;sys.path.append(r'/home/javier/.var/app/org.eclipse.Java/eclipse/plugins/org.python.pydev.core_10.2.1.202307021217/pysrc')
+#                import pydevd;pydevd.settrace('127.0.0.1',port=9999)
                 add_info = agenda.additional_info[0]
                 for slot in slots:
-                    info_list.append({'hour': slot, 
+                    info_list.append({'hour': DatetimeHelper.get_time_string_from_float(DatetimeHelper.get_user_datetime(slot.start_datetime).time()), 
                                       'text': add_info.text, 
                                       'img': self.image_data_uri(add_info.image) if add_info.image else False})
             else:

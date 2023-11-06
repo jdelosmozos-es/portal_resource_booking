@@ -211,9 +211,9 @@ odoo.define('portal_resource_booking.booking', function (require) {
 											if (event_list['instructions'][j]['hour'] === 0) {
 												instructionImg = event_list['instructions'][j]['img'];
 												instructionsText = event_list['instructions'][j]['text'];
-											} else if (event_list['instructions'][j]['hour'] === selectedTime) {
+											} else if (event_list['instructions'][j]['hour'] === selectedTime.value) {
 												instructionImg = event_list['instructions'][j]['img'];
-												instructionsText = jevent_list['instructions'][j]['test'];
+												instructionsText = event_list['instructions'][j]['test'];
 											}
 										}
 										$("#form-space-info").addClass('appointment_confirm_close');
