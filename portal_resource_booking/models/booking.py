@@ -4,6 +4,9 @@ from odoo.tools import date_utils
 from dateutil.relativedelta import relativedelta 
 from datetime import timedelta, datetime
 from babel.dates import format_date
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class BookingResourceAgenda(models.Model):
     _name = 'booking.resource.agenda'
@@ -162,6 +165,9 @@ class BookingResourceAgenda(models.Model):
             for record in self:
                 record.booking_slots.unlink()
                 record._generate_agenda()
+                for service in record.env['booking.resource.service'].search([('agenda','=',record.id)]):
+                    if not service.slots:
+                        service.unlink()
         return res
     
     def _generate_agenda(self):
@@ -210,10 +216,15 @@ class BookingResourceAgenda(models.Model):
                         'start_datetime': DateTimeHelper.get_server_time(slot_start),
                         'end_datetime': DateTimeHelper.get_server_time(slot_end),
                     }
-                    existing_slot = Slot.search([('start_datetime', '=', slot_start), ('end_datetime', '=', slot_end), ('agenda', '=', agenda.id)])
+                    existing_slot = Slot.search([
+                            ('start_datetime', '=', DateTimeHelper.get_server_time(slot_start)), 
+                            ('end_datetime', '=', DateTimeHelper.get_server_time(slot_end)), 
+                            ('agenda', '=', agenda.id)])
                     if not existing_slot:
                         Slot.create(slot)
-                self.env['booking.resource.service'].create({'agenda': agenda.id, 'date': day.date()})
+                service = self.env['booking.resource.service'].search([('agenda','=', agenda.id),('date','=',day.date())])
+                if not service:
+                    self.env['booking.resource.service'].create({'agenda': agenda.id, 'date': day.date()})
         return True                     
 
     @api.model
@@ -306,9 +317,13 @@ class BookingResourceAgendaSlot(models.Model):
         
     def unlink(self):
         for record in self:
+            DateTimeHelper = self.env['booking.datetime.helper']
             if record.occupancy > 0:
-                raise UserError(_('You cannot delete an already reserved slot.'))
-        super(BookingResourceAgendaSlot, self).unlink()
+                date = DateTimeHelper.get_user_datetime(record.start_datetime)
+                _logger.warning(_('You cannot delete an already booked slot: %s - %s') % (date.time(), 
+                                                        format_date(date.date(),locale=self.env.user.lang,format='short')))
+            else:
+                super(BookingResourceAgendaSlot, record).unlink()
 
     def name_get(self):
         result = []
