@@ -11,7 +11,8 @@
     'website': '',
     'live_test_url':'',
     'category': 'Website/Website',
-    'depends': ['website', 'contacts', 'calendar_resource_location_mac5', 'web_domain_field'],
+    'depends': ['website', 'contacts', 'calendar_resource_location_mac5', 'web_domain_field', 'crnd_web_view_refresh_timed ',
+                'web_notify', 'quick_search_time_range',],
     'data': [
         'data/booking_data.xml',
         'data/booking_crons.xml',
